@@ -1,0 +1,22 @@
+name: ci
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  conformance:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: validate sample
+        run: node conformance/validate.mjs conformance/sample.json
+      - name: reference connector self-certifies
+        run: node connectors/reference-connector/connector.mjs
+      - name: example email connector self-certifies
+        run: node connectors/example-email/connector.mjs
+      - name: provenance hash-chain verifier round-trip
+        run: node test/provenance.test.mjs
