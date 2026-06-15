@@ -8,5 +8,6 @@ Mycelium is a **spec + connectors**; it carries no secrets and stores no data it
   provenance event.
 
 ## Reporting a vulnerability
-Email the maintainers (replace with the project contact) rather than opening a public issue.
+Please use **GitHub private security advisories** to report a vulnerability — open one at
+<https://github.com/thomhoffer-arch/Mycelium/security/advisories/new> rather than filing a public issue.
 We aim to acknowledge within a few working days and coordinate a fix + disclosure.
