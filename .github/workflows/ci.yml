@@ -20,3 +20,7 @@ jobs:
         run: node connectors/example-email/connector.mjs
       - name: provenance hash-chain verifier round-trip
         run: node test/provenance.test.mjs
+      - name: revit uniqueId -> ifc GlobalId derivation
+        run: node test/derive-ifc-guid.test.mjs
+      - name: hub registry lints
+        run: node test/lint-registry.test.mjs
