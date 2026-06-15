@@ -36,6 +36,21 @@ can consume it.
 lightweight and open (see `GOVERNANCE.md`); the spec evolves by additive minor versions
 (`CONTRIBUTING.md`).
 
+---
+
+## Ecosystem
+
+The Connective Spine is implemented by **model sources** (connectors) and consumed by **orchestrators**:
+
+- **Model Sources**:
+  - [PDRA](https://github.com/thomhoffer-arch/PDRA) (Revit MCP tools)
+  - [loam-revit-connector](https://github.com/thomhoffer-arch/loam-revit-connector) (Revit MCP tools, early stage)
+
+- **Orchestrators**:
+  - [Loam](https://github.com/thomhoffer-arch/Loam) (private; constructs spine records and provenance ledger)
+
+---
+
 ## License
 Apache-2.0 (see `LICENSE`) — implement it freely, open or commercial. "Mycelium" the name and brand
 are not granted by the license.
