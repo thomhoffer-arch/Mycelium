@@ -15,7 +15,7 @@ export function checkConformance({ identity = {}, freshness = {} } = {}) {
   if (identity.actor && !/^(human|agent|service|did):/.test(String(identity.actor))) errors.push('actor must be a pseudonymous ref (human:/agent:/service:/did:)');
   if (freshness && Object.keys(freshness).length) {
     for (const k of ['source', 'revisionId', 'confidence']) if (freshness[k] == null || freshness[k] === '') errors.push(`freshness.${k} is required`);
-    if (freshness.confidence && !['live', 'snapshot'].includes(freshness.confidence)) errors.push("freshness.confidence must be 'live' or 'snapshot'");
+    if (freshness.confidence && !['live', 'snapshot', 'derived'].includes(freshness.confidence)) errors.push("freshness.confidence must be 'live', 'snapshot', or 'derived'");
   } else {
     errors.push('freshness stamp is required (source, revisionId, confidence)');
   }
