@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/thomhoffer-arch/Mycelium/spec/schema/freshness-stamp.schema.json",
+  "title": "Connective Spine — Freshness Stamp (v0.1)",
+  "description": "Returned with every response, so a consumer can refuse a snapshot↔live join.",
+  "type": "object",
+  "required": ["source", "revisionId", "confidence"],
+  "properties": {
+    "source": { "type": "string" },
+    "revisionId": { "type": "string", "description": "Opaque revision token for this source's state." },
+    "asOf": { "type": ["string", "null"], "description": "ISO-8601 timestamp, or null." },
+    "confidence": { "type": "string", "enum": ["live", "snapshot"] },
+    "hasUnsavedChanges": { "type": "boolean" }
+  }
+}

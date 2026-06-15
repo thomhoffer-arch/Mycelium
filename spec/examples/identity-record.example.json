@@ -1,0 +1,8 @@
+{
+  "source": "pdra", "sourceLocalId": "4071989",
+  "projectKey": "demo",
+  "uniqueId": "b1e3cc7c-7430-4ede-a6e3-d3ce4bdfc342-003e2235",
+  "ifcGuid": "IFCGUID-SAMPLE-A",
+  "classification": [{ "system": "NL-SfB", "code": "22.20" }],
+  "zone": { "id": "ZoneB", "name": "Zone B (scope box)" }
+}

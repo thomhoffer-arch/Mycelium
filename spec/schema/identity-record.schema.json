@@ -1,0 +1,41 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/thomhoffer-arch/Mycelium/spec/schema/identity-record.schema.json",
+  "title": "Connective Spine — Identity Record (v0.1)",
+  "description": "Every object a connector emits. Identity is a RECORD, not one key. MUST carry source, sourceLocalId, projectKey, and at least one join key.",
+  "type": "object",
+  "required": ["source", "sourceLocalId", "projectKey"],
+  "properties": {
+    "source": { "type": "string", "description": "Connector/source id, e.g. clashcontrol, pdra, erpnext, bcf." },
+    "sourceLocalId": { "type": "string", "description": "The source's own id for this object." },
+    "projectKey": { "type": "string", "description": "Shared, source-agnostic project id (reconciled across sources)." },
+    "ifcGuid": { "type": "string", "description": "IFC GlobalId — joins model-derived sources only." },
+    "uniqueId": { "type": "string", "description": "Revit UniqueId — the stable cross-tool model key (primary)." },
+    "modelInstanceId": { "type": "string", "description": "Which model instance/revision this came from (for cross-bridge consistency)." },
+    "classification": {
+      "description": "One or more {system, code} — the non-GUID join to finance/contracts.",
+      "oneOf": [
+        { "$ref": "#/$defs/classification" },
+        { "type": "array", "items": { "$ref": "#/$defs/classification" } }
+      ]
+    },
+    "workPackage": { "type": "string" },
+    "costCode": { "type": "string" },
+    "zone": {
+      "description": "Spatial zone; id MUST be unique within projectKey.",
+      "oneOf": [ { "type": "string" }, { "$ref": "#/$defs/zone" } ]
+    }
+  },
+  "$defs": {
+    "classification": {
+      "type": "object",
+      "required": ["system", "code"],
+      "properties": { "system": { "type": "string" }, "code": { "type": "string" }, "ref": { "type": "string", "format": "uri" } }
+    },
+    "zone": {
+      "type": "object",
+      "required": ["id"],
+      "properties": { "id": { "type": "string" }, "name": { "type": "string" } }
+    }
+  }
+}

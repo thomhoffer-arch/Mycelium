@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/thomhoffer-arch/Mycelium/spec/schema/provenance-event.schema.json",
+  "title": "Connective Spine — Provenance Event (v0.1)",
+  "description": "One append-only, hash-chained event per proposal/decision/write. Actors are pseudonymous (never raw PII).",
+  "type": "object",
+  "required": ["source", "action", "ts", "result"],
+  "properties": {
+    "source": { "type": "string" },
+    "action": { "type": "string", "description": "e.g. triage, set_clash_status, set_param, outcome." },
+    "targetKeys": { "type": "object", "description": "Identity keys of the affected object(s)." },
+    "projectKey": { "type": "string" },
+    "actor": { "type": "string", "pattern": "^(human|agent|service|did):", "description": "Pseudonymous ref, e.g. human:u_8f3a." },
+    "proposedBy": { "type": "string" },
+    "approvedBy": { "type": ["string", "null"] },
+    "revision": { "type": ["object", "string", "null"] },
+    "result": { "type": "string", "description": "proposed | executed | triaged | …" },
+    "after": { "type": "object", "description": "The recorded change/decision payload." },
+    "prevHash": { "type": ["string", "null"], "description": "Hash of the previous event (tamper-evidence)." },
+    "ts": { "type": "string", "description": "ISO-8601 timestamp." }
+  }
+}
