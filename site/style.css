@@ -83,10 +83,7 @@ footer { border-top: 1px solid var(--line); margin-top: 3rem; padding: 2rem 0 3r
 
 @media (max-width: 720px) {
   .grid { grid-template-columns: 1fr; }
-  /* mobile nav: keep links visible, just tighten */
-  .nav .wrap { height: auto; flex-wrap: wrap; padding-block: 0.5rem; row-gap: 0.3rem; }
-  .nav nav { display: flex; flex-wrap: wrap; gap: 0.4rem 0.9rem; }
-  .nav nav a { margin-left: 0; font-size: 0.85rem; }
+  .nav nav a:not(.ghost) { display: none; }
   /* tighten code blocks so they don't push past the viewport */
   pre { padding: 0.9rem 1rem; border-radius: 10px; }
   code { font-size: 0.78rem; }
