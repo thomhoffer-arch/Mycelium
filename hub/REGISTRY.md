@@ -20,6 +20,7 @@ tested against a real model/project).
 
 | Connector | Source | Join key | Status | Repo |
 |---|---|---|---|---|
+| mycelium-connector-clashcontrol | ClashControl (clash detection) | `ifcGuid` / `uniqueId` / `zone` | 🧪 | [`thomhoffer-arch/clashcontrol`](https://github.com/thomhoffer-arch/clashcontrol) |
 | mycelium-connector-reference | (in-repo example) | n/a | 🧪 | [`/connectors/reference-connector`](https://github.com/thomhoffer-arch/Mycelium/tree/main/connectors/reference-connector) |
 | mycelium-connector-email | Outlook/IMAP | `po` / `nlsfb` / `bcf` / `zone` | 🧪 | [`/connectors/example-email`](https://github.com/thomhoffer-arch/Mycelium/tree/main/connectors/example-email) |
 | mycelium-connector-erpnext | ERPNext | `classification` / `workPackage` | 🧪 | [`/connectors/example-erpnext`](https://github.com/thomhoffer-arch/Mycelium/tree/main/connectors/example-erpnext) |
