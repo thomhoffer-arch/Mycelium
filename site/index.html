@@ -59,11 +59,11 @@
     <section id="build" class="wrap build">
       <h2>Build on it.</h2>
       <p class="lede">Any tool can join the network. A spine record is just this:</p>
-      <pre><code>{
+      <pre><code id="spine-snippet" data-source='{
   "identity":  { "source": "revit", "sourceLocalId": "…",
                  "projectKey": "…", "ifcGuid": "0X3$tP9…" },
   "freshness": { "source": "revit", "revisionId": "g/58", "confidence": "live" }
-}</code></pre>
+}'></code><span class="caret" aria-hidden="true"></span></pre>
       <p class="muted">Emit that, and an orchestrator can join, triage and account for your data —
       alongside everyone else's. Open, neutral, no lock-in.</p>
     </section>
@@ -76,6 +76,31 @@
       <p class="soon">Coming soon.</p>
     </section>
   </main>
+
+  <script>
+    (() => {
+      const code = document.getElementById('spine-snippet');
+      if (!code) return;
+      const text = code.dataset.source || '';
+      const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if (reduce) { code.textContent = text; return; }
+      let i = 0;
+      const tick = () => {
+        if (i >= text.length) return;
+        code.textContent += text[i++];
+        const ch = text[i - 1];
+        // type a bit faster after newlines/indent, a touch slower on punctuation
+        const delay = ch === '\n' ? 20 : ch === ' ' ? 12 : /[{}\[\]:,]/.test(ch) ? 45 : 22;
+        setTimeout(tick, delay);
+      };
+      const start = () => { if (!code.textContent) tick(); };
+      if ('IntersectionObserver' in window) {
+        new IntersectionObserver((entries, obs) => {
+          if (entries.some((e) => e.isIntersecting)) { obs.disconnect(); start(); }
+        }, { threshold: 0.3 }).observe(code);
+      } else { start(); }
+    })();
+  </script>
 
   <footer class="wrap">
     <div class="foot">
