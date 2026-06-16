@@ -3,11 +3,11 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>The intelligence layer — AI orchestrator for AEC · Mycelium</title>
-  <meta name="description" content="Mycelium is the open spine. The intelligence layer that runs on top — an AI orchestrator for BIM, clash, finance and field data — joins the records and decides under human approval. Sovereign, cited, accountable." />
+  <title>The intelligence layer — Mycelium</title>
+  <meta name="description" content="Mycelium is the open spine. An intelligence layer that runs on top of it — joining records, ranking what matters, writing back under human approval — is being built separately. The standard is for everyone." />
   <meta name="keywords" content="AI orchestrator BIM, AEC LLM agent, construction AI copilot, sovereign AI construction, EU AI BIM, MCP orchestrator, agentic AEC, ledgered AI decisions, BIM clash triage AI, open AI BIM stack" />
-  <meta property="og:title" content="The intelligence layer — AI orchestrator for AEC" />
-  <meta property="og:description" content="An open, sovereign AI orchestrator stack for AEC data. Joins your model, clash, finance and field data on the Mycelium spine — and decides under human approval, with a tamper-evident audit trail." />
+  <meta property="og:title" content="The intelligence layer — Mycelium" />
+  <meta property="og:description" content="Mycelium is the open spine. The intelligence that runs on top is built separately." />
   <link rel="stylesheet" href="../style.css" />
   <link rel="stylesheet" href="../spec/spec.css" />
 </head>
@@ -28,56 +28,23 @@
 
   <main>
     <article class="wrap spec">
-      <p class="kicker">intelligence layer · orchestration</p>
-      <h1>An AI orchestrator for AEC, where the data lives.</h1>
+      <p class="kicker">growing in the network</p>
+      <h1>The intelligence layer.</h1>
       <p class="lede">
-        Mycelium is the open spine: the contract that lets model, clash, finance and field data
-        join across tools. The <b>intelligence layer</b> is what runs on top of that spine — an
-        AI orchestrator that joins the records, ranks what matters, and writes back only under
-        human approval. Sovereign by construction. Cited by default. Accountable in a ledger.
+        Mycelium is the open spine that any tool can speak. The intelligence layer is what
+        runs on top — the program that joins the records, follows the identity edges, and
+        proposes writes that a human approves before they're executed. The spine makes that
+        layer possible (and interchangeable); the spine itself does not pretend to be one.
       </p>
 
-      <h2>What an orchestrator does</h2>
-      <p>An AEC AI agent is only useful if it can pull together what's currently in five tools —
-      the Revit model, the clash detector, the BCF issues, the ERP purchase orders, the site
-      reports — and answer one question with one provenance. The orchestrator is the program
-      that does that joining: it consumes spine records from any connector, follows the
-      identity edges (uniqueId, ifcGuid, classification, work-package, zone), and triages by
-      whatever your project's profile says matters.</p>
-      <p>It is not a chatbot, and it is not a BIM viewer. It is the layer that turns "what does
-      the model say × what does finance say × what did the inspector see" into one
-      decision-grade answer.</p>
+      <p>The first reference implementation is in development. The spec it consumes is open
+      today, so anyone — open source, commercial, in-house — can build their own.</p>
 
-      <h2>Sovereign by construction</h2>
-      <p>The orchestrator runs where your data already lives — your laptop, your server, your
-      VPC. There is no shared cloud you have to upload your project to. Connectors fetch from
-      the source they already have access to; the LLM call can be a local model or a hosted
-      one your firm has approved. No US SaaS dependency in the base layer.</p>
-      <p>This matters for EU firms working under GDPR, for public-sector projects with
-      sovereignty clauses, and for any office that doesn't want to send drawings to a black
-      box.</p>
+      <p class="soon">Coming soon.</p>
 
-      <h2>Cited and accountable — the AI audit trail</h2>
-      <p>Every join, proposal and approved write is appended to the same
-      <a href="../spec/#3-provenance-event-the-ledger">tamper-evident provenance ledger</a>
-      the spine defines. Actors are pseudonymous refs (<code>agent:llm</code>,
-      <code>human:u_8f3a</code>) — never raw names or emails. Six months later you can prove
-      exactly which model revision, which clash, which approver, which prompt.</p>
-      <p>Hand the file to an insurer or a court. The chain verifies; no platform between you
-      and the evidence.</p>
-
-      <h2>Open base, private intelligence</h2>
-      <p>Mycelium is open (Apache-2.0). Connectors are open. The contract is forkable. The
-      orchestrator on top is where the accumulated judgement — triage rules, project profiles,
-      ranking — lives, and that is not part of the open standard. Different orchestrators can
-      compete on top of the same spine. No single vendor captures the network.</p>
-
-      <h2>Coming soon</h2>
-      <p>The first reference orchestrator built on Mycelium is in development. The spec it
-      consumes is public today. The orchestrator itself ships as a separate product.</p>
       <p class="cta-row">
-        <a class="btn" href="https://github.com/thomhoffer-arch/Mycelium">Watch the repo</a>
-        <a class="btn ghost" href="../spec/">Read the spine</a>
+        <a class="btn" href="../spec/">Read the spec</a>
+        <a class="btn ghost" href="https://github.com/thomhoffer-arch/Mycelium">Watch the repo</a>
       </p>
     </article>
   </main>

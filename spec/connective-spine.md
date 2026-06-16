@@ -1,9 +1,9 @@
 # Connective Spine — identity, freshness & provenance contract
 
 > **Status:** draft **v0.1** — the contract every data source conforms to so it can be
-> joined, kept fresh, and held accountable inside the ClashControl connective layer.
-> **License:** open spec (CC-BY-4.0 suggested) — the schema is public; the *intelligence*
-> (orchestrator, composite decisions, models) is not. ClashControl is the reference implementation.
+> joined, kept fresh, and held accountable across the connective layer.
+> **License:** open spec (Apache-2.0) — the schema is public; the *intelligence*
+> (orchestrator, composite decisions, models) is private to whoever builds it.
 > **Audience:** anyone building a source connector (model, clash, finance, contracts, site/QA, CDE).
 
 ## Conformance language
@@ -14,11 +14,12 @@ new event types may appear over time and **MUST NOT** break existing consumers.
 
 ## Why this exists
 
-The demo cell is **Revit ↔ PDRA ↔ ClashControl ↔ LLM**: cross-tool data, joined on a
-shared identity, answered by one LLM, written back under human approval. The end goal is the
-*same loop generalised* — more sources (clash, finance/ERP, contracts, site/QA, CDE),
-more parties, across the lifecycle, accumulating an accountable history that can't be
-re-created elsewhere.
+AEC data lives in silos: the model is in one tool, the clash detector in another, finance in a
+third, the field reports in a fourth. The point of this spec is to make those silos joinable —
+cross-tool data, joined on a shared identity, with writes going through propose → approve →
+execute and a history that can't be re-created elsewhere. The same loop generalises across
+more sources (clash, finance/ERP, contracts, site/QA, CDE), more parties, and across the
+project lifecycle.
 
 That only works if every source speaks a shared contract for three things:
 
@@ -31,12 +32,13 @@ BCF, QA). It does **not** reach finance, contracts, or documents — those join 
 **classification, work-package, cost-code, and zone**. So identity is a *record of
 keys*, of which any GUID is one edge.
 
-> **Field test (13 Jun 2026) — why v0.1 changed the model-side key.** A live CC↔PDRA join
-> on the Horizons model **failed**: CC emitted `ifcGuid` (PDRA's stored `IFC_GUID` parameter
-> was unpopulated → no match) and `revitId`/ElementId (CC was on a *detached copy* → different
-> document, different id space → no match). Lesson baked in below: the stable model-side key
-> is the Revit **UniqueId** (derive the IfcGuid from it), never the stored IFC_GUID param and
-> never raw ElementId, and every record carries a **modelInstanceId** so joins can't cross copies.
+> **Field test (13 Jun 2026) — why v0.1 changed the model-side key.** A live join between
+> two Revit-reading tools on a real project **failed**: one emitted `ifcGuid` (the other's
+> stored `IFC_GUID` parameter was unpopulated → no match) and `revitId`/ElementId (one tool
+> was on a *detached copy* → different document, different id space → no match). Lesson baked
+> in below: the stable model-side key is the Revit **UniqueId** (derive the IfcGuid from it),
+> never the stored IFC_GUID param and never raw ElementId, and every record carries a
+> **modelInstanceId** so joins can't cross copies.
 
 ## 1. Identity record
 
@@ -54,7 +56,7 @@ keys two sources share.
 | `workPackage` | work-package / activity id | **finance/ERP, scheduling** |
 | `costCode` | cost / budget code | **finance/ERP** |
 | `zone` | spatial bucket; today = storey/level (later IfcZone/IfcSpace) | site, QA, scheduling |
-| `source` | originating tool id (`clashcontrol`, `pdra`, `erpnext`, …) | provenance, freshness |
+| `source` | originating tool id (`revit`, `ifc`, `bcf`, `erpnext`, …) | provenance, freshness |
 | `sourceLocalId` | the object's id *inside* its source tool | round-trip / write-back |
 | `projectKey` | shared project identifier | partitioning, multi-party |
 
@@ -78,7 +80,7 @@ keys two sources share.
 (e.g. `horizons`). It is **not tied to any tool**, so adding non-Revit sources stays trivial —
 each maps its own native project id to the same canonical key. Where a source auto-generates
 its own id (the two Revit-reading tools today), the orchestrator reconciles it via the mapping
-corpus (`kind:'projectkey'`). **Bootstrap for Revit tools only:** so CC and PDRA agree on a
+corpus (`kind:'projectkey'`). **Bootstrap for Revit tools only:** so two Revit-reading tools agree on a
 deterministic *native* id automatically, both may use `projectKey = "revit:" + ProjectInformation.UniqueId`
 (same open doc → same string); that native id is then mapped once to the canonical assigned key.
 
@@ -122,22 +124,13 @@ A GUID is the first edge, not the spine. The projection maintains typed edges:
 
 New sources extend this registry by **adding edge types**, never by rewriting the spine.
 
-### Where ClashControl emits this today — and the gap to close
-
-- `get_clashes` → `globalId` (ifcGuid) + `revitId`; `classificationA/B` and `storey` currently **null**.
-- **MUST add:** `uniqueIdA/B` (the reliable key), `ifcGuid` derived from it, `modelInstanceId`,
-  and **populate `classification` + `storey`** (the DQ addon already extracts NL-SfB — surface it).
-- `get_element_by_guid` → same additions, used as the inverse join.
-- PDRA mirror: `pdra_inspect_elements` (expose `unique_id`), `pdra_get_element_by_ifcguid`
-  (and ideally a `by_unique_id` lookup, since the stored IFC_GUID param is unreliable).
-
 ## 2. Freshness stamp
 
 Joining across mismatched revisions is the silent-wrong-answer failure mode, so the stamp is
 uniform and the orchestrator's staleness guard is generic.
 
 ```jsonc
-{ "source": "clashcontrol", "revisionId": "model-rev-58",
+{ "source": "clash-tool", "revisionId": "model-rev-58",
   "asOf": "2026-06-17T09:58:00Z", "confidence": "live" }
 ```
 
@@ -151,10 +144,10 @@ uniform and the orchestrator's staleness guard is generic.
 `confidence`: **`live`** = read from the authoritative running source now; **`snapshot`** =
 exported/cached copy that may lag; **`derived`** = computed (carries the lowest confidence of inputs).
 
-**Per-source `revisionId`**
-- **CC live link** → Connector sync id / `model._version` + `lastSync` (`get_status.revision`); `revit-direct` ⇒ `live`.
-- **CC IFC file** → `ifc:<name>#<elementCount>@v<version>` ⇒ `snapshot`.
-- **PDRA / live Revit** → `Document.GetDocumentVersion` (`VersionGUID` + `NumberOfSaves`); `has_unsaved_changes` flags in-session edits the guid doesn't yet reflect.
+**Per-source `revisionId` (examples)**
+- **Live model connector** → connector sync id / `model._version` + `lastSync`; `revit-direct` ⇒ `live`.
+- **IFC file snapshot** → `ifc:<name>#<elementCount>@v<version>` ⇒ `snapshot`.
+- **Live Revit document** → `Document.GetDocumentVersion` (`VersionGUID` + `NumberOfSaves`); `has_unsaved_changes` flags in-session edits the guid doesn't yet reflect.
 - **ERP / CDE** → that system's revision/etag + timestamp.
 
 **Staleness guard (generic):** group joined data by `source`; if two sources differ in
@@ -177,7 +170,7 @@ to a single sink (local JSONL/Postgres now; durable store later).
   "actor":      "agent:orchestrator" | "agent:llm" | "human:u_8f3a",  // PSEUDONYMOUS ref
   "proposedBy": "agent:llm",
   "approvedBy": "human:u_8f3a" | null,
-  "source":     "pdra" | "clashcontrol" | "erpnext",   // tool that owns/executes the change
+  "source":     "revit" | "clash-tool" | "erpnext",   // tool that owns/executes the change
   "action":     "set_clash_status" | "edit_element" | "create_workitem",
   "targetKeys": { "uniqueId": "…", "ifcGuid": "…", "classification": { "system": "NL-SfB", "code": "32.31" } },
   "revision":   { "source": "pdra", "revisionId": "…", "asOf": "…" },
@@ -190,15 +183,14 @@ to a single sink (local JSONL/Postgres now; durable store later).
 
 **Rules**
 - **Ownership / one writer per domain:** each `action` has exactly one owning `source`
-  (CC owns clash status; PDRA owns model edits; ERPNext owns finance). No source writes another's domain.
+  (the clash tool owns clash status; the model authoring tool owns model edits; the ERP owns finance). No source writes another's domain.
 - **Auto-propose → approve → execute:** a write is `proposed` first; it becomes `executed` only
   after an `approved` event from a human. Reuse each tool's existing autonomy gate.
 - **Tamper-evident:** each event carries `prevHash` = SHA-256 of the previous event.
 - **GDPR (business-case §11):** the log holds **only pseudonymous actor refs**; real
   names/emails live in a *separate, mutable* identity map outside the chain (crypto-erasable).
   No personal data enters the ledger.
-- **Portable:** prefer standard carriers — BCF for issues (CC already round-trips
-  `cc:aiModel/aiSource/aiAt`), IFC for model, IDS for requirements.
+- **Portable:** prefer standard carriers — BCF for issues, IFC for model, IDS for requirements.
 
 ## 4. Transport
 
@@ -232,7 +224,7 @@ to a single sink (local JSONL/Postgres now; durable store later).
 { "source":"pdra","sourceLocalId":"4071989","projectKey":"horizons","modelInstanceId":"verguid-ae5e3f31",
   "uniqueId":"<revit-uniqueid>","ifcGuid":"2nuynyGAbDmerxyLRW68$W",
   "classification":{"system":"NL-SfB","code":"32.31"},"zone":{"kind":"scopeBox","id":"Horizons_B_Onderbouw"} }  // a door
-{ "source":"clashcontrol","sourceLocalId":"clash-114","projectKey":"horizons","modelInstanceId":"verguid-ae5e3f31",
+{ "source":"clash-tool","sourceLocalId":"clash-114","projectKey":"horizons","modelInstanceId":"verguid-ae5e3f31",
   "uniqueId":"<same-revit-uniqueid>","zone":{"kind":"scopeBox","id":"Horizons_B_Onderbouw"} }
 { "source":"erpnext","sourceLocalId":"PO-2041","projectKey":"horizons",
   "classification":{"system":"NL-SfB","code":"32.31"},"workPackage":"WP-DOOR-B" }  // no GUID
@@ -263,7 +255,7 @@ to a single sink (local JSONL/Postgres now; durable store later).
 - **v0.1** (13 Jun 2026) — model-side key changed to Revit **`uniqueId`** (derive `ifcGuid` from it);
   the stored `IFC_GUID` parameter and raw `revitId`/ElementId are deprecated as cross-tool keys;
   added **`modelInstanceId`** (join must not cross document copies); made `classification` + `zone/storey`
-  required-where-available on model-derived payloads. Driven by the live CC↔PDRA join test (see Field test).
+  required-where-available on model-derived payloads. Driven by the field test above.
 - **v0** — initial contract: identity record, join semantics, edge registry, freshness stamp +
   staleness guard, append-only tamper-evident provenance ledger with pseudonymous actors, MCP transport,
   conformance checklist, worked example.
