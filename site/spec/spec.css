@@ -7,6 +7,13 @@
 .spec h1 { font-size: 2rem; margin-top: 0; }
 .spec h2 { margin-top: 2.2rem; }
 .spec h3 { margin-top: 1.6rem; }
+.spec h1 code, .spec h2 code, .spec h3 code, .spec h4 code {
+  font-size: inherit;
+  font-weight: inherit;
+  background: rgba(255,255,255,0.06);
+  padding: 0 0.25em;
+  border-radius: 4px;
+}
 .spec p, .spec li { font-size: 1rem; }
 .spec pre {
   background: rgba(255,255,255,0.04);
