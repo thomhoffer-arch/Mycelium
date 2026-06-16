@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Hub — Mycelium</title>
+  <meta name="description" content="The Mycelium connector registry. Suggest a source, or add your own connector." />
+  <link rel="stylesheet" href="../style.css" />
+  <link rel="stylesheet" href="../spec/spec.css" />
+</head>
+<body>
+  <header class="nav">
+    <div class="wrap">
+      <a class="mark" href="../">Mycelium</a>
+      <nav>
+        <a href="../spec/">Spec</a>
+        <a href="../build/">Build</a>
+        <a href="../conformance/">Conformance</a>
+        <a href="./">Hub</a>
+        <a href="../trust/">Trust</a>
+        <a class="ghost" href="https://github.com/thomhoffer-arch/Mycelium">GitHub</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <div class="wrap spec-layout">
+      <aside class="toc" aria-label="Contents">
+        <p class="toc-title">Contents</p>
+        <nav id="toc"></nav>
+      </aside>
+      <article id="content" class="spec">
+        <p class="kicker">hub</p>
+        <h1>The connector registry.</h1>
+        <p class="lede">
+          The hub is the public index of conformant connectors. Each connector lives in its own
+          repo on its own cadence; the hub just links them so people can find them. No central
+          approval, no gatekeeper.
+        </p>
+
+        <h2>Suggest a source</h2>
+        <p>Have a tool you'd like to see on the network — a CDE, a fabrication system, an
+        in-house cost tracker — but you're not going to build the connector yourself? Open a
+        suggestion. It tells the community what's wanted, and someone may pick it up.</p>
+        <p class="cta-row">
+          <a class="btn" href="https://github.com/thomhoffer-arch/Mycelium/issues/new?template=new-connector.md">Suggest a source</a>
+        </p>
+
+        <h2>Add your own connector</h2>
+        <p>If you've built (or are building) a connector that passes the
+        <a href="../conformance/">conformance kit</a>, get it on the registry. The process is one
+        PR:</p>
+        <ol>
+          <li>Make sure your connector declares the spine version it targets in its README.</li>
+          <li>Run the conformance kit; ship a passing sample.</li>
+          <li>Open a PR adding a row to
+          <a href="https://github.com/thomhoffer-arch/Mycelium/blob/main/hub/REGISTRY.md">hub/REGISTRY.md</a>
+          — name, source, spine version, repo URL, licence, maintainer, status.</li>
+        </ol>
+        <p>The hub linter (run in CI) checks the row is well-formed. If something's off, the PR
+        won't merge — but the error message tells you exactly what to fix.</p>
+        <p class="cta-row">
+          <a class="btn" href="../build/">Read the build guide</a>
+          <a class="btn ghost" href="https://github.com/thomhoffer-arch/Mycelium/blob/main/hub/REGISTRY.md">Open a registry PR</a>
+        </p>
+
+        <h2>The current registry</h2>
+        <p class="muted">Rendered live from <code>hub/REGISTRY.md</code>.</p>
+        <article id="registry">
+          <p class="muted">Loading the registry…</p>
+        </article>
+      </article>
+    </div>
+  </main>
+
+  <footer class="wrap">
+    <div class="foot">
+      <span class="mark small">Mycelium</span>
+      <nav>
+        <a href="../spec/">Spec</a>
+        <a href="../conformance/">Conformance</a>
+        <a href="../build/">Build a connector</a>
+        <a href="../trust/">Trust</a>
+        <a href="./">Hub</a>
+        <a href="https://github.com/thomhoffer-arch/Mycelium">GitHub</a>
+      </nav>
+      <span class="muted">An open standard · Apache-2.0</span>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/marked@13.0.0/marked.min.js"
+          crossorigin="anonymous"></script>
+  <script src="../toc.js"></script>
+  <script>
+    (async () => {
+      const target = document.getElementById('registry');
+      try {
+        const res = await fetch('./REGISTRY.md', { cache: 'no-cache' });
+        if (!res.ok) throw new Error('HTTP ' + res.status);
+        const md = await res.text();
+        marked.setOptions({ gfm: true });
+        target.innerHTML = marked.parse(md);
+      } catch (e) {
+        target.innerHTML = '<p class="muted">Could not load the registry. <a href="https://github.com/thomhoffer-arch/Mycelium/blob/main/hub/REGISTRY.md">View it on GitHub</a>.</p>';
+      } finally {
+        window.buildToc('#content', '#toc');
+      }
+    })();
+  </script>
+</body>
+</html>
