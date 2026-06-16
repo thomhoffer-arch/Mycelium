@@ -41,34 +41,31 @@
   margin-top: 2rem;
 }
 
-/* two-column spec layout: sticky TOC + content */
+/* two-column spec layout: minimal sticky TOC + content */
 .spec-layout {
   display: grid;
-  grid-template-columns: 220px minmax(0, 1fr);
-  gap: 2.5rem;
+  grid-template-columns: 180px minmax(0, 1fr);
+  gap: 2rem;
   padding-block: 3rem;
   align-items: start;
 }
-.spec-layout .spec { max-width: 760px; padding-block: 0; }
+.spec-layout .spec { max-width: 720px; padding-block: 0; }
 .toc {
   position: sticky;
   top: 80px;
-  font-size: 0.88rem;
-  border-left: 1px solid rgba(255,255,255,0.08);
-  padding-left: 1rem;
+  font-size: 0.82rem;
   max-height: calc(100vh - 100px);
   overflow-y: auto;
 }
 .toc-title {
-  margin: 0 0 0.6rem;
-  font-size: 0.75rem;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--accent);
+  /* keep DOM-friendly but visually hide; minimal sidebar = just the links */
+  position: absolute;
+  width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden;
+  clip: rect(0,0,0,0); white-space: nowrap; border: 0;
 }
 .toc ul { list-style: none; margin: 0; padding: 0; }
-.toc li { margin: 0.3rem 0; line-height: 1.35; }
-.toc li.lv-H3 { padding-left: 0.85rem; font-size: 0.82rem; }
+.toc li { margin: 0.25rem 0; line-height: 1.3; }
+.toc li.lv-H3 { padding-left: 0.75rem; font-size: 0.78rem; opacity: 0.8; }
 .toc a { color: var(--muted); text-decoration: none; }
 .toc a:hover { color: var(--fg); }
 
@@ -77,7 +74,6 @@
   .toc {
     position: static;
     max-height: none;
-    border-left: none;
     border-top: 1px solid rgba(255,255,255,0.08);
     padding: 1rem 0 0;
   }
