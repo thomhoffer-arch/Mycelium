@@ -21,6 +21,33 @@ A workflow at `.github/workflows/pages.yml` publishes `site/` on every push to
 will then be live at `https://thomhoffer-arch.github.io/Mycelium/`. No build
 step, no card.
 
+## Custom domain (connectivespine.org)
+
+`site/CNAME` already contains `connectivespine.org`, so GitHub Pages will pick
+it up automatically once DNS resolves. At the domain registrar, add either set:
+
+**Apex (`connectivespine.org`)** — four A records:
+```
+185.199.108.153
+185.199.109.153
+185.199.110.153
+185.199.111.153
+```
+And the AAAA records for IPv6:
+```
+2606:50c0:8000::153
+2606:50c0:8001::153
+2606:50c0:8002::153
+2606:50c0:8003::153
+```
+
+**`www.connectivespine.org`** — one CNAME record pointing at
+`thomhoffer-arch.github.io.` (trailing dot matters at most registrars).
+
+After DNS resolves (a few minutes to a few hours), go to **Settings → Pages**,
+paste `connectivespine.org` in the **Custom domain** box, save, and tick
+**Enforce HTTPS** once the cert provisions (a few more minutes).
+
 ## Deploy (Codeberg Pages, EU-sovereign, free)
 
 Codeberg is a non-profit, Berlin-based Git host. Codeberg Pages serves any
