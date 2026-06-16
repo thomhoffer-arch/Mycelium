@@ -2,7 +2,7 @@
 
 Wrap **any** third-party MCP server (or API) in a thin adapter that emits **spine records with join edges**, so its data links to model / clash / finance via the spine (consumed by an orchestrator such as Loam). The upstream MCP stays unchanged; the adapter is additive and config-driven — a user fills in a mapping, not code.
 
-> **Two tiers (recap).** Tier 1 = use the upstream MCP's tools directly (action/reasoning, no join). Tier 2 = this adapter, which turns the source into joinable spine records. The **join itself lives in Loam** — the adapter only *exposes the keys to join on*. That keeps the moat (mail ↔ clash ↔ model ↔ € linking) in the orchestrator, not in every connector.
+> **Two tiers (recap).** Tier 1 = use the upstream MCP's tools directly (action/reasoning, no join). Tier 2 = this adapter, which turns the source into joinable spine records. The **join itself lives in the orchestrator** — the adapter only *exposes the keys to join on*. That keeps the joining logic in one place, not in every connector.
 
 ---
 
@@ -29,7 +29,7 @@ The adapter reads those, then emits one spine record per email:
   "freshness": { "source":"outlook", "revisionId":"2026-06-15T09:00Z",
                  "asOf":"2026-06-15T09:00Z", "confidence":"live" },
   "subject": "RE: balkonplaat level 3 — clash + meerwerk",
-  "from": "sub@beton.nl",
+  "from": "sub@example.nl",
   "edges": {                                   // ← the join keys (the point)
     "po":       ["PUR-ORD-2026-00005"],
     "nlsfb":    ["23.22"],
@@ -49,14 +49,14 @@ Loam then joins `edges` → the real **23.22 balcony clash** + the **€60k balc
 
 Two ways an email/doc links to a clash/model/PO. Support both; **prefer the first.**
 
-1. **Issue-attach (human-asserted, high-confidence) — preferred.** When a user creates a coordination **issue** (in CC) on a clash, they **attach the relevant email/doc** by its adapter `uniqueId`. That records an explicit `issue ↔ email` edge — and since the issue already carries the clash's element keys (classification, work-package, zone — see the CC issue-keys ticket), the email joins **transitively** to clash → model → PO. The human made the relevance call (D5), the edge is **ledgered (D2)**, confidence = high. This is the cleanest moat demo: one issue ties the mail thread, the clash, the element, and the €. **Far more robust than guessing from text.**
+1. **Issue-attach (human-asserted, high-confidence) — preferred.** When a user creates a coordination **issue** (in CC) on a clash, they **attach the relevant email/doc** by its adapter `uniqueId`. That records an explicit `issue ↔ email` edge — and since the issue already carries the clash's element keys (classification, work-package, zone — see the CC issue-keys ticket), the email joins **transitively** to clash → model → PO. The human made the relevance call, the edge is ledgered, confidence = high. One issue ties the mail thread, the clash, the element, and the €. **Far more robust than guessing from text.**
 2. **Passive extraction (machine-suggested, lower-confidence) — discovery.** The adapter scans records and extracts edges via the patterns below. Good for surfacing "emails that probably relate to this clash"; low-confidence hits route to `needs_review` for a human to confirm — which then *becomes* a mode-1 attach.
 
 The adapter supports both at once: it always emits the record + extracted edges (mode 2) **and** exposes each record's `uniqueId` so a human can attach it to an issue (mode 1). Mode 1 is the trustworthy join; mode 2 is the assistant that proposes candidates.
 
 ### Upstream variant — local vs cloud M365 (same adapter either way)
 - **win32COM Outlook MCP** (the example above) — **local, no cloud, Windows + Outlook running**; email only. Best for the **sovereign / privacy-first** story: data never leaves the machine, no OAuth tokens.
-- **Microsoft Graph MCP** (`microsoft_graph_mcp_server`) — **cloud, OAuth 2.0**; full M365 (SharePoint docs, Teams, Calendar) and cross-platform. Richer for the moat — contracts, RFIs and decisions live in SharePoint/Teams, not just inboxes — at the cost of a cloud dependency.
+- **Microsoft Graph MCP** (`microsoft_graph_mcp_server`) — **cloud, OAuth 2.0**; full M365 (SharePoint docs, Teams, Calendar) and cross-platform. Wider reach — contracts, RFIs and decisions live in SharePoint/Teams, not just inboxes — at the cost of a cloud dependency.
 
 Because Loam is **connector-agnostic, you don't choose for the user**: both publish the *same* spine record shape; only the upstream `read` tools and the credential model differ. Sovereignty-minded user → local win32COM; breadth-minded user → Graph. The adapter mapping is nearly identical.
 
@@ -107,7 +107,7 @@ for each record from source.read tools:
 ## Where each piece lives (D5/D6)
 
 - **Adapter (open connector):** fetch + normalise + emit edges + the deterministic extractors. No join logic.
-- **Loam (private):** the actual join (email.edges ↔ clash/model/PO), ranking, and the LLM's semantic linking for the fuzzy cases. **This is the moat — it stays in the orchestrator.**
+- **Loam (private):** performs the join (email.edges ↔ clash/model/PO) and the semantic linking for the fuzzy cases. The joining logic stays in the orchestrator — connectors only expose the keys.
 - **Upstream MCP (person X's):** untouched. Tier-1 tool use also still works.
 
 ## Security (mandatory)
