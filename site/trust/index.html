@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Privacy, sovereignty & accountability — Mycelium</title>
+  <meta name="description" content="Mycelium keeps your data where it is, leaves names out of the audit trail, and makes every change provably yours. An open standard, no vendor lock-in." />
+  <link rel="stylesheet" href="../style.css" />
+  <link rel="stylesheet" href="../spec/spec.css" />
+</head>
+<body>
+  <header class="nav">
+    <div class="wrap">
+      <a class="mark" href="../">Mycelium</a>
+      <nav>
+        <a href="../spec/">Spec</a>
+        <a href="../build/">Build</a>
+        <a href="./">Trust</a>
+        <a class="ghost" href="https://github.com/thomhoffer-arch/Mycelium">GitHub</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <article class="wrap spec">
+      <p class="kicker">privacy · sovereignty · accountability</p>
+      <h1>The four fears, addressed.</h1>
+      <p class="lede">
+        Most AEC interoperability stacks ask you to ship project data into someone else's cloud,
+        merge it with a black-box, and trust the result. Mycelium is built the other way around.
+      </p>
+
+      <h2>1. Your data stays where it is.</h2>
+      <p>Mycelium is a <b>contract</b>, not a hub. Every connector runs <i>inside</i> your
+      environment — your laptop, your server, your VPC — and reads the source it already has
+      access to. There is no central Mycelium server, no mandatory upload, no shared bucket.</p>
+      <p>The standard is open (Apache-2.0). Your project data is yours. The two never get mixed
+      up because they live in different places.</p>
+
+      <h2>2. Names stay out of the audit trail (GDPR).</h2>
+      <p>Every write is recorded as a provenance event. Actors in those events are
+      <b>pseudonymous refs</b> — <code>human:u_8f3a</code>, <code>agent:llm</code>, never a name
+      or an email. The mapping from a ref to a real person is kept in a <i>separate, mutable</i>
+      identity store that only the people who need to see it can read.</p>
+      <p>That separation is deliberate: it lets you honour a GDPR erasure request without
+      breaking the chain of evidence. You delete the mapping; the ledger entries still verify,
+      but the person is no longer identifiable.</p>
+
+      <h2>3. The audit trail is yours, and it's tamper-evident.</h2>
+      <p>Every proposal, approval and executed change is appended to a log, and each entry
+      carries a SHA-256 hash of the entry before it. Rewrite one event and every subsequent
+      hash stops matching — anyone with the file can detect it.</p>
+      <p>For a court, an insurer, or a client asking "who decided this, and when?", the
+      answer is a single file you can hand over. No third party, no platform, no subpoena.</p>
+
+      <h2>4. No vendor lock-in.</h2>
+      <p>Mycelium is an open spec under Apache-2.0. Anyone — including your competitors — can
+      implement it. Connectors live in their own repos under whichever licence their authors
+      choose. The hub indexes them; it does not gatekeep.</p>
+      <p>If the steward of the project ever drifts in a direction you don't like, you can fork
+      the spec and keep going. That's the point of an open standard: <b>no single party can
+      capture it</b>, including the people who started it.</p>
+
+      <h2>And the fragmentation problem itself.</h2>
+      <p>The reason AEC data is so often wrong is that "the same thing" lives under a different
+      id in every tool. Mycelium fixes the id problem at the bottom: a stable
+      <a href="../spec/#1-identity-record">identity record</a> with multiple keys, a
+      <a href="../spec/#2-freshness-stamp">freshness stamp</a> that refuses stale-vs-live joins,
+      and a <b>model-instance guard</b> that refuses to join two copies of "the same" model.
+      Silent wrong answers stop being possible.</p>
+
+      <h2>What Mycelium is not.</h2>
+      <p>Mycelium does not decide which clash matters. It does not write your reports. It does
+      not run your project. That intelligence — joining, ranking, deciding — is a separate
+      layer that sits <i>on top of</i> the spine. That layer is where the value (and the
+      liability) lives, and it is not part of this open standard.</p>
+      <p class="muted">More on that soon.</p>
+
+      <p class="cta-row">
+        <a class="btn" href="../spec/">Read the spec</a>
+        <a class="btn ghost" href="../build/">Build a connector</a>
+      </p>
+    </article>
+  </main>
+
+  <footer class="wrap">
+    <div class="foot">
+      <span class="mark small">Mycelium</span>
+      <nav>
+        <a href="../spec/">Spec</a>
+        <a href="https://github.com/thomhoffer-arch/Mycelium/tree/main/conformance">Conformance</a>
+        <a href="../build/">Build a connector</a>
+        <a href="./">Trust</a>
+        <a href="https://github.com/thomhoffer-arch/Mycelium/blob/main/hub/REGISTRY.md">Hub</a>
+        <a href="https://github.com/thomhoffer-arch/Mycelium">GitHub</a>
+      </nav>
+      <span class="muted">An open standard · Apache-2.0</span>
+    </div>
+  </footer>
+</body>
+</html>

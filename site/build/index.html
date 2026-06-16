@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Build a connector — Mycelium</title>
+  <meta name="description" content="A connector wraps one source as Mycelium spine records. Five short steps, zero dependencies." />
+  <link rel="stylesheet" href="../style.css" />
+  <link rel="stylesheet" href="../spec/spec.css" />
+</head>
+<body>
+  <header class="nav">
+    <div class="wrap">
+      <a class="mark" href="../">Mycelium</a>
+      <nav>
+        <a href="../spec/">Spec</a>
+        <a href="./">Build</a>
+        <a href="../trust/">Trust</a>
+        <a class="ghost" href="https://github.com/thomhoffer-arch/Mycelium">GitHub</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <article class="wrap spec">
+      <p class="kicker">build a connector</p>
+      <h1>Build a connector</h1>
+      <p class="lede">
+        A connector is a small program that reads one source — Revit, ArchiCAD, ERPNext, BCF,
+        email, an in-house tool — and outputs records in the shape Mycelium expects. Other tools
+        can then join your data with theirs.
+      </p>
+
+      <h2>What you emit</h2>
+      <p>Two objects per record. That's the whole contract.</p>
+      <pre><code>{
+  "identity":  {
+    "source": "erpnext",
+    "sourceLocalId": "PUR-ORD-2026-00005",
+    "projectKey": "horizons",
+    "classification": [{ "system": "NL-SfB", "code": "23.22" }],
+    "workPackage": "WP-BALCONY-L3"
+  },
+  "freshness": {
+    "source": "erpnext",
+    "revisionId": "2026-06-12T10:00:00Z",
+    "confidence": "snapshot"
+  }
+}</code></pre>
+      <p><b>Identity</b> is a set of keys, not just one. Anyone reading it joins on whichever
+      key they also have. Model tools join on <code>uniqueId</code> or <code>ifcGuid</code>;
+      finance and field tools join on <code>classification</code>, <code>workPackage</code>,
+      or <code>zone</code>. <b>Freshness</b> is the revision the data belongs to so a consumer
+      can refuse a stale join.</p>
+
+      <h2>Five steps</h2>
+      <ol>
+        <li>Read the <a href="../spec/">spec</a>. It defines identity, freshness, provenance and
+        how joins are supposed to work.</li>
+        <li>Decide your mapping. Which upstream field is the stable id? Which fields become
+        which identity keys? The
+        <a href="https://github.com/thomhoffer-arch/Mycelium/blob/main/connectors/SPINE_ADAPTER_TEMPLATE.md">
+        spine adapter template</a> walks through this.</li>
+        <li>Write the connector. Use <code>lib/spine-adapter.mjs</code> — zero dependencies,
+        self-certifying. You supply <code>fetchSource()</code>; it handles the rest.
+        The <a href="https://github.com/thomhoffer-arch/Mycelium/blob/main/connectors/reference-connector/connector.mjs">
+        reference connector</a> and the
+        <a href="https://github.com/thomhoffer-arch/Mycelium/tree/main/connectors/example-email">
+        email example</a> are short enough to read in one sitting.</li>
+        <li>Check conformance. Run <code>node conformance/validate.mjs</code> on a sample, and
+        work through the
+        <a href="https://github.com/thomhoffer-arch/Mycelium/blob/main/conformance/CHECKLIST.md">
+        checklist</a>.</li>
+        <li>Register it. Open a PR adding a row to
+        <a href="https://github.com/thomhoffer-arch/Mycelium/blob/main/hub/REGISTRY.md">
+        hub/REGISTRY.md</a> so others can find it.</li>
+      </ol>
+
+      <h2>If your connector also writes</h2>
+      <p>Most connectors only read. If yours also writes back — flips a clash status, files an
+      RFI, posts a cost item — every change goes through <b>propose → approve → execute</b>, and
+      each step is recorded as an event in an append-only, hash-chained log
+      (<code>lib/provenance.mjs</code>). Actors in the log are pseudonymous refs like
+      <code>human:u_8f3a</code> or <code>agent:llm</code>, never names or emails.</p>
+
+      <h2>Maturity</h2>
+      <ul>
+        <li>🧪 <b>experimental</b> — works on a fixture; not battle-tested.</li>
+        <li>🟡 <b>community</b> — in real use somewhere; not independently verified.</li>
+        <li>✅ <b>verified</b> — passes the conformance kit and has been tested on a real
+        project. Prefer this in production.</li>
+      </ul>
+
+      <p class="cta-row">
+        <a class="btn" href="../spec/">Read the spec</a>
+        <a class="btn ghost" href="https://github.com/thomhoffer-arch/Mycelium/tree/main/connectors">Browse connectors on GitHub</a>
+      </p>
+    </article>
+  </main>
+
+  <footer class="wrap">
+    <div class="foot">
+      <span class="mark small">Mycelium</span>
+      <nav>
+        <a href="../spec/">Spec</a>
+        <a href="https://github.com/thomhoffer-arch/Mycelium/tree/main/conformance">Conformance</a>
+        <a href="./">Build a connector</a>
+        <a href="../trust/">Trust</a>
+        <a href="https://github.com/thomhoffer-arch/Mycelium/blob/main/hub/REGISTRY.md">Hub</a>
+        <a href="https://github.com/thomhoffer-arch/Mycelium">GitHub</a>
+      </nav>
+      <span class="muted">An open standard · Apache-2.0</span>
+    </div>
+  </footer>
+</body>
+</html>

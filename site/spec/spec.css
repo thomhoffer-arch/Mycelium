@@ -1,0 +1,42 @@
+/* Spec page — readable long-form on top of the site theme. */
+.spec {
+  max-width: 760px;
+  padding-block: 3rem;
+  line-height: 1.6;
+}
+.spec h1 { font-size: 2rem; margin-top: 0; }
+.spec h2 { margin-top: 2.2rem; }
+.spec h3 { margin-top: 1.6rem; }
+.spec p, .spec li { font-size: 1rem; }
+.spec pre {
+  background: rgba(255,255,255,0.04);
+  border-radius: 8px;
+  padding: 1rem;
+  overflow-x: auto;
+  font-size: 0.85rem;
+}
+.spec code { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; }
+.spec table {
+  border-collapse: collapse;
+  margin-block: 1rem;
+  width: 100%;
+  font-size: 0.9rem;
+}
+.spec th, .spec td {
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+  padding: 0.4rem 0.6rem;
+  text-align: left;
+  vertical-align: top;
+}
+.spec blockquote {
+  border-left: 3px solid rgba(255,255,255,0.2);
+  margin: 1rem 0;
+  padding: 0.2rem 1rem;
+  color: rgba(255,255,255,0.75);
+}
+.spec .cta-row {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  margin-top: 2rem;
+}

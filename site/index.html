@@ -15,7 +15,8 @@
       <span class="mark">Mycelium</span>
       <nav>
         <a href="#what">What</a>
-        <a href="#build">Build</a>
+        <a href="./build/">Build</a>
+        <a href="./trust/">Trust</a>
         <a href="#loam">Loam</a>
         <a class="ghost" href="https://github.com/thomhoffer-arch/Mycelium">GitHub</a>
       </nav>
@@ -32,8 +33,8 @@
         the network.
       </p>
       <div class="cta">
-        <a class="btn" href="https://github.com/thomhoffer-arch/Mycelium/blob/main/spec/connective-spine.md">Read the spec</a>
-        <a class="btn ghost" href="https://github.com/thomhoffer-arch/Mycelium/tree/main/connectors">Build a connector</a>
+        <a class="btn" href="./spec/">Read the spec</a>
+        <a class="btn ghost" href="./build/">Build a connector</a>
       </div>
     </section>
 
@@ -58,11 +59,11 @@
     <section id="build" class="wrap build">
       <h2>Build on it.</h2>
       <p class="lede">Any tool can join the network. A spine record is just this:</p>
-      <pre><code>{
+      <pre><code id="spine-snippet" data-source='{
   "identity":  { "source": "revit", "sourceLocalId": "…",
                  "projectKey": "…", "ifcGuid": "0X3$tP9…" },
   "freshness": { "source": "revit", "revisionId": "g/58", "confidence": "live" }
-}</code></pre>
+}'></code><span class="caret" aria-hidden="true"></span></pre>
       <p class="muted">Emit that, and an orchestrator can join, triage and account for your data —
       alongside everyone else's. Open, neutral, no lock-in.</p>
     </section>
@@ -76,13 +77,39 @@
     </section>
   </main>
 
+  <script>
+    (() => {
+      const code = document.getElementById('spine-snippet');
+      if (!code) return;
+      const text = code.dataset.source || '';
+      const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if (reduce) { code.textContent = text; return; }
+      let i = 0;
+      const tick = () => {
+        if (i >= text.length) return;
+        code.textContent += text[i++];
+        const ch = text[i - 1];
+        // type a bit faster after newlines/indent, a touch slower on punctuation
+        const delay = ch === '\n' ? 20 : ch === ' ' ? 12 : /[{}\[\]:,]/.test(ch) ? 45 : 22;
+        setTimeout(tick, delay);
+      };
+      const start = () => { if (!code.textContent) tick(); };
+      if ('IntersectionObserver' in window) {
+        new IntersectionObserver((entries, obs) => {
+          if (entries.some((e) => e.isIntersecting)) { obs.disconnect(); start(); }
+        }, { threshold: 0.3 }).observe(code);
+      } else { start(); }
+    })();
+  </script>
+
   <footer class="wrap">
     <div class="foot">
       <span class="mark small">Mycelium</span>
       <nav>
-        <a href="https://github.com/thomhoffer-arch/Mycelium/blob/main/spec/connective-spine.md">Spec</a>
+        <a href="./spec/">Spec</a>
         <a href="https://github.com/thomhoffer-arch/Mycelium/tree/main/conformance">Conformance</a>
-        <a href="https://github.com/thomhoffer-arch/Mycelium/tree/main/connectors">Connectors</a>
+        <a href="./build/">Build a connector</a>
+        <a href="./trust/">Trust</a>
         <a href="https://github.com/thomhoffer-arch/Mycelium/blob/main/hub/REGISTRY.md">Hub</a>
         <a href="https://github.com/thomhoffer-arch/Mycelium">GitHub</a>
       </nav>
