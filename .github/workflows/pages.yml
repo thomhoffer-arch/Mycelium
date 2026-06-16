@@ -2,7 +2,7 @@ name: pages
 on:
   push:
     branches: [main]
-    paths: ['site/**', 'spec/connective-spine.md', 'conformance/CHECKLIST.md', '.github/workflows/pages.yml']
+    paths: ['site/**', 'spec/connective-spine.md', 'conformance/CHECKLIST.md', 'hub/REGISTRY.md', '.github/workflows/pages.yml']
   workflow_dispatch:
 
 permissions:
@@ -26,6 +26,8 @@ jobs:
         run: cp spec/connective-spine.md site/spec/connective-spine.md
       - name: stage conformance checklist next to conformance page
         run: cp conformance/CHECKLIST.md site/conformance/CHECKLIST.md
+      - name: stage hub registry next to hub page
+        run: cp hub/REGISTRY.md site/hub/REGISTRY.md
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:
