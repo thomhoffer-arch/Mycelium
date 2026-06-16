@@ -84,4 +84,9 @@ footer { border-top: 1px solid var(--line); margin-top: 3rem; padding: 2rem 0 3r
 @media (max-width: 720px) {
   .grid { grid-template-columns: 1fr; }
   .nav nav a:not(.ghost) { display: none; }
+  /* tighten code blocks so they don't push past the viewport */
+  pre { padding: 0.9rem 1rem; border-radius: 10px; }
+  code { font-size: 0.78rem; }
+  .hero { padding: 4rem 0 2.5rem; }
+  .anchor { padding: 0.7rem 0.9rem; font-size: 0.98rem; }
 }
