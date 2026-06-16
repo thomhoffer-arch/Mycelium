@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Conformance — Mycelium</title>
+  <meta name="description" content="A zero-dependency kit that proves your connector fits the Mycelium contract before it ships." />
+  <link rel="stylesheet" href="../style.css" />
+  <link rel="stylesheet" href="../spec/spec.css" />
+</head>
+<body>
+  <header class="nav">
+    <div class="wrap">
+      <a class="mark" href="../">Mycelium</a>
+      <nav>
+        <a href="../spec/">Spec</a>
+        <a href="../build/">Build</a>
+        <a href="./">Conformance</a>
+        <a href="../trust/">Trust</a>
+        <a class="ghost" href="https://github.com/thomhoffer-arch/Mycelium">GitHub</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <div class="wrap spec-layout">
+      <aside class="toc" aria-label="Contents">
+        <p class="toc-title">Contents</p>
+        <nav id="toc"></nav>
+      </aside>
+      <article id="content" class="spec">
+      <p class="kicker">conformance</p>
+      <h1>Prove your connector fits.</h1>
+      <p class="lede">
+        Conformance is the trust signal. A connector earns it by passing a small, zero-dependency
+        kit: a validator, a sample, and the checklist below. Pass it, register in the
+        <a href="https://github.com/thomhoffer-arch/Mycelium/blob/main/hub/REGISTRY.md">hub</a>,
+        carry the verified badge.
+      </p>
+
+      <h2>The kit</h2>
+      <p>Three files. No build, no dependencies. Run it locally or in CI.</p>
+      <pre><code># validate one sample
+node conformance/validate.mjs conformance/sample.json
+
+# self-certify your connector (see the reference)
+node connectors/reference-connector/connector.mjs</code></pre>
+      <p>The validator returns either <code>{ conformant: true }</code> or a list of specific
+      errors. Wire it into your CI so a regression can't ship.</p>
+
+      <article id="checklist">
+        <p class="muted">Loading the checklist…</p>
+      </article>
+
+      <h2>Maturity badge</h2>
+      <ul>
+        <li><b>experimental</b> — passes the kit on a fixture; not battle-tested.</li>
+        <li><b>community</b> — in real use somewhere; not independently verified.</li>
+        <li><b>verified</b> — passes the kit <i>and</i> has been tested on a real
+        project. Prefer this in production.</li>
+      </ul>
+
+      <p class="cta-row">
+        <a class="btn" href="../build/">Build a connector</a>
+        <a class="btn ghost" href="https://github.com/thomhoffer-arch/Mycelium/tree/main/conformance">View the kit on GitHub</a>
+      </p>
+      </article>
+    </div>
+  </main>
+
+  <footer class="wrap">
+    <div class="foot">
+      <span class="mark small">Mycelium</span>
+      <nav>
+        <a href="../spec/">Spec</a>
+        <a href="./">Conformance</a>
+        <a href="../build/">Build a connector</a>
+        <a href="../trust/">Trust</a>
+        <a href="https://github.com/thomhoffer-arch/Mycelium/blob/main/hub/REGISTRY.md">Hub</a>
+        <a href="https://github.com/thomhoffer-arch/Mycelium">GitHub</a>
+      </nav>
+      <span class="muted">An open standard · Apache-2.0</span>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/marked@13.0.0/marked.min.js"
+          crossorigin="anonymous"></script>
+  <script src="../toc.js"></script>
+  <script>
+    (async () => {
+      const target = document.getElementById('checklist');
+      try {
+        const res = await fetch('./CHECKLIST.md', { cache: 'no-cache' });
+        if (!res.ok) throw new Error('HTTP ' + res.status);
+        const md = await res.text();
+        marked.setOptions({ gfm: true });
+        target.innerHTML = marked.parse(md);
+      } catch (e) {
+        target.innerHTML = '<p class="muted">Could not load the checklist. <a href="https://github.com/thomhoffer-arch/Mycelium/blob/main/conformance/CHECKLIST.md">View it on GitHub</a>.</p>';
+      } finally {
+        window.buildToc('#content', '#toc');
+      }
+    })();
+  </script>
+</body>
+</html>

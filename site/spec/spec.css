@@ -40,3 +40,45 @@
   flex-wrap: wrap;
   margin-top: 2rem;
 }
+
+/* two-column spec layout: sticky TOC + content */
+.spec-layout {
+  display: grid;
+  grid-template-columns: 220px minmax(0, 1fr);
+  gap: 2.5rem;
+  padding-block: 3rem;
+  align-items: start;
+}
+.spec-layout .spec { max-width: 760px; padding-block: 0; }
+.toc {
+  position: sticky;
+  top: 80px;
+  font-size: 0.88rem;
+  border-left: 1px solid rgba(255,255,255,0.08);
+  padding-left: 1rem;
+  max-height: calc(100vh - 100px);
+  overflow-y: auto;
+}
+.toc-title {
+  margin: 0 0 0.6rem;
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+.toc ul { list-style: none; margin: 0; padding: 0; }
+.toc li { margin: 0.3rem 0; line-height: 1.35; }
+.toc li.lv-H3 { padding-left: 0.85rem; font-size: 0.82rem; }
+.toc a { color: var(--muted); text-decoration: none; }
+.toc a:hover { color: var(--fg); }
+
+@media (max-width: 900px) {
+  .spec-layout { grid-template-columns: 1fr; gap: 1.5rem; }
+  .toc {
+    position: static;
+    max-height: none;
+    border-left: none;
+    border-top: 1px solid rgba(255,255,255,0.08);
+    padding: 1rem 0 0;
+  }
+}

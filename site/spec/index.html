@@ -15,6 +15,7 @@
       <nav>
         <a href="./">Spec</a>
         <a href="../build/">Build</a>
+        <a href="../conformance/">Conformance</a>
         <a href="../trust/">Trust</a>
         <a class="ghost" href="https://github.com/thomhoffer-arch/Mycelium">GitHub</a>
       </nav>
@@ -22,9 +23,15 @@
   </header>
 
   <main>
-    <article id="content" class="wrap spec">
-      <p class="muted">Loading the spec…</p>
-    </article>
+    <div class="wrap spec-layout">
+      <aside class="toc" aria-label="Contents">
+        <p class="toc-title">Contents</p>
+        <nav id="toc"><p class="muted">…</p></nav>
+      </aside>
+      <article id="content" class="spec">
+        <p class="muted">Loading the spec…</p>
+      </article>
+    </div>
   </main>
 
   <footer class="wrap">
@@ -32,7 +39,7 @@
       <span class="mark small">Mycelium</span>
       <nav>
         <a href="./">Spec</a>
-        <a href="https://github.com/thomhoffer-arch/Mycelium/tree/main/conformance">Conformance</a>
+        <a href="../conformance/">Conformance</a>
         <a href="../build/">Build a connector</a>
         <a href="../trust/">Trust</a>
         <a href="https://github.com/thomhoffer-arch/Mycelium/blob/main/hub/REGISTRY.md">Hub</a>
@@ -44,6 +51,7 @@
 
   <script src="https://cdn.jsdelivr.net/npm/marked@13.0.0/marked.min.js"
           crossorigin="anonymous"></script>
+  <script src="../toc.js"></script>
   <script>
     (async () => {
       const target = document.getElementById('content');
@@ -53,8 +61,10 @@
         const md = await res.text();
         marked.setOptions({ gfm: true, breaks: false });
         target.innerHTML = marked.parse(md);
+        window.buildToc('#content', '#toc');
       } catch (e) {
         target.innerHTML = '<p class="muted">Could not load the spec. <a href="https://github.com/thomhoffer-arch/Mycelium/blob/main/spec/connective-spine.md">View it on GitHub</a>.</p>';
+        document.getElementById('toc').innerHTML = '';
       }
     })();
   </script>
