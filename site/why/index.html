@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Why your Revit, IFC, BCF and ERP data don't talk — Mycelium</title>
+  <meta name="description" content="Why your BIM model, clash data, finance system and field reports never join — and the open standard that fixes it without locking you into a vendor cloud. Built for Revit, IFC, BCF, ERPNext and any tool that speaks them." />
+  <meta name="keywords" content="why BIM data fragmented, Revit IFC GUID different export, BIM 360 open alternative, connect Revit to ERP, BCF connector standard, open source BIM interoperability, AEC data silos, construction software does not talk, IFC GUID changes between exports, model clash finance join, OpenCDE alternative, IFCx, OpenAEC" />
+  <meta property="og:title" content="Why your AEC tools don't talk" />
+  <meta property="og:description" content="Five questions every coordinator has asked at 11pm. One open fix." />
+  <link rel="stylesheet" href="../style.css" />
+  <link rel="stylesheet" href="../spec/spec.css" />
+</head>
+<body>
+  <header class="nav">
+    <div class="wrap">
+      <a class="mark" href="../">Mycelium</a>
+      <nav>
+        <a href="../spec/">Spec</a>
+        <a href="../build/">Build</a>
+        <a href="../conformance/">Conformance</a>
+        <a href="../hub/">Hub</a>
+        <a href="../trust/">Trust</a>
+        <a class="ghost" href="https://github.com/thomhoffer-arch/Mycelium">GitHub</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <article class="wrap spec">
+      <p class="kicker">five questions at eleven pm</p>
+      <h1>Why your AEC tools don't talk — and the open fix.</h1>
+      <p class="lede">
+        If you've ever stayed late chasing a clash that finance somehow already paid for, or
+        re-exported an IFC because a colleague's GUIDs didn't match yours, or copied numbers
+        from a viewer into a spreadsheet because nothing else linked — this is for you.
+      </p>
+
+      <h2>"Why are my Revit ElementIds different from my colleague's?"</h2>
+      <p>Because <code>ElementId</code> is local to a Revit document. Two copies of the same
+      file have different ElementId spaces. The Revit <code>UniqueId</code> is the stable key
+      across worksharing, and the IFC <code>GlobalId</code> can be derived from it
+      deterministically — no IFC export required. Mycelium ships
+      <a href="https://github.com/thomhoffer-arch/Mycelium/blob/main/lib/derive-ifc-guid.mjs">the
+      derivation</a> as a zero-dependency function so every tool produces the same GUID
+      without having to run the export round-trip.</p>
+
+      <h2>"Why does my IFC export give different GUIDs than the stored IFC_GUID parameter?"</h2>
+      <p>Because the stored <code>IFC_GUID</code> Revit parameter is only populated after an
+      IFC export round-trip, and is inconsistently present across project files. Mycelium's
+      spec
+      <a href="../spec/#1-identity-record">explicitly deprecates</a> the stored param as a
+      cross-tool key. Use the UniqueId, derive the IfcGuid; everything matches.</p>
+
+      <h2>"Why don't my clash, my model and my purchase order line up?"</h2>
+      <p>Because each tool has a different idea of "the same thing." The clash detector knows
+      a GUID. The ERP knows an NL-SfB classification and a work-package. The field inspector
+      knows a zone. None of them share a primary key. Mycelium's
+      <a href="../spec/#1-identity-record">identity record</a> is a <i>set</i> of keys —
+      GUID, classification, work-package, zone — so anyone can join on whatever they have.</p>
+
+      <h2>"Why am I paying €40k a year for a cloud I don't trust with my drawings?"</h2>
+      <p>You're paying because the vendor cloud is currently the only thing that joins your
+      tools. The point of an open standard is to make that join layer free, sovereign and
+      local. Mycelium runs <i>inside</i> your environment. The spec is open, every connector
+      is open, and your data never has to leave the laptop or VPC it already lives on. See
+      <a href="../trust/">Trust</a> for the four buyer fears, addressed.</p>
+
+      <h2>"Who decided this? Who approved it? When? Can I prove it later?"</h2>
+      <p>Every approved change in the network is appended to a tamper-evident provenance
+      ledger (SHA-256 chain, pseudonymous actors, GDPR-friendly). Six months from now an
+      insurer or a court can verify the chain in seconds. No vendor between you and the
+      evidence.</p>
+
+      <hr />
+
+      <h2>So what is Mycelium, exactly?</h2>
+      <p>A small, open contract — three things: <b>identity</b>, <b>freshness</b>,
+      <b>provenance</b> — that every AEC tool can speak. Build a connector once; any
+      orchestrator that speaks Mycelium can read your data. No vendor cloud in the middle.
+      Apache-2.0. EU-rooted.</p>
+
+      <p class="cta-row">
+        <a class="btn" href="../spec/">Read the spec</a>
+        <a class="btn ghost" href="../build/">Build a connector</a>
+      </p>
+
+      <h2>Related searches we want to be useful for</h2>
+      <p class="muted">If you arrived here from one of these, you're in the right place:
+      <i>open BIM interoperability standard, alternative to BIM 360 / Autodesk Construction
+      Cloud, open source CDE, connect Revit to ERPNext, connect Revit to SAP, IFC GUID
+      derivation, ifcGuid from Revit UniqueId, BCF connector, MCP for AEC, agentic BIM,
+      sovereign AI for construction, EU AI BIM stack, IFCx, OpenAEC Studio, OpenCDE,
+      buildingSMART interoperability, BIM data audit trail, GDPR BIM, BIM project ledger,
+      construction data join, Dalux data join, Forma export to spine</i>.</p>
+    </article>
+  </main>
+
+  <footer class="wrap">
+    <div class="foot">
+      <span class="mark small">Mycelium</span>
+      <nav>
+        <a href="../spec/">Spec</a>
+        <a href="../conformance/">Conformance</a>
+        <a href="../build/">Build a connector</a>
+        <a href="../trust/">Trust</a>
+        <a href="../hub/">Hub</a>
+        <a href="https://github.com/thomhoffer-arch/Mycelium">GitHub</a>
+      </nav>
+      <span class="muted">An open standard · Apache-2.0</span>
+    </div>
+  </footer>
+</body>
+</html>
