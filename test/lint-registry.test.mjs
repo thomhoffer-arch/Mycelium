@@ -11,17 +11,17 @@ assert.equal(realResult.ok, true, `real registry must lint clean: ${JSON.stringi
 
 const broken = `# x
 
-| Connector | Source | Spine version | Repo | License | Maintainer | Status |
-|---|---|---|---|---|---|---|
-| \`bad-name\` | thing | v0.1 | https://example.com | Apache-2.0 | acme | proposed |
-| \`mycelium-connector-erp\` | erp | v9.9 | https://example.com | WeirdLicense | acme | shipped |
+| Connector | Source | Status | Repo |
+|---|---|---|---|
+| good-name | thing | 🧪 | https://example.com |
+|  | thing | 🧪 | https://example.com |
+| bad name | thing | weirdstatus |  |
 `;
 const r = lintRegistry(broken);
 assert.equal(r.ok, false, 'broken fixture must fail');
 const joined = r.errors.join('\n');
-assert.match(joined, /Connector must be/, 'name rule must fire');
-assert.match(joined, /unknown spine version/, 'spine version rule must fire');
-assert.match(joined, /unrecognized SPDX license/, 'license rule must fire');
-assert.match(joined, /status "shipped" not in/, 'status rule must fire');
+assert.match(joined, /Connector cell is empty/, 'empty connector rule must fire');
+assert.match(joined, /unknown status/, 'status rule must fire');
+assert.match(joined, /Repo cell is empty/, 'empty repo rule must fire');
 
 console.log(JSON.stringify({ ok: true, real: realResult, broken: r }, null, 2));

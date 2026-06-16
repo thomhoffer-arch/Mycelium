@@ -9,7 +9,7 @@
     "source": { "type": "string" },
     "revisionId": { "type": "string", "description": "Opaque revision token for this source's state." },
     "asOf": { "type": ["string", "null"], "description": "ISO-8601 timestamp, or null." },
-    "confidence": { "type": "string", "enum": ["live", "snapshot"] },
+    "confidence": { "type": "string", "enum": ["live", "snapshot", "derived"] },
     "hasUnsavedChanges": { "type": "boolean" }
   }
 }

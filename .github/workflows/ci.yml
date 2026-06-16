@@ -18,9 +18,15 @@ jobs:
         run: node connectors/reference-connector/connector.mjs
       - name: example email connector self-certifies
         run: node connectors/example-email/connector.mjs
+      - name: example erpnext connector self-certifies
+        run: node connectors/example-erpnext/connector.mjs
+      - name: example bcf connector self-certifies
+        run: node connectors/example-bcf/connector.mjs
       - name: provenance hash-chain verifier round-trip
         run: node test/provenance.test.mjs
       - name: revit uniqueId -> ifc GlobalId derivation
         run: node test/derive-ifc-guid.test.mjs
       - name: hub registry lints
         run: node test/lint-registry.test.mjs
+      - name: orchestrator join + freshness guard
+        run: node test/orchestrator.test.mjs
