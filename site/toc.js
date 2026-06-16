@@ -7,20 +7,23 @@
       .replace(/\s+/g, '-')
       .replace(/^-+|-+$/g, '');
   }
+  function stripNumbering(s) {
+    return String(s).replace(/^\s*\d+(?:\.\d+)*\.?\s+/, '');
+  }
   window.buildToc = function buildToc(rootSelector, tocSelector) {
     var root = document.querySelector(rootSelector);
     var toc = document.querySelector(tocSelector);
     if (!root || !toc) return;
     var items = [];
-    root.querySelectorAll('h2, h3').forEach(function (h) {
+    root.querySelectorAll('h2').forEach(function (h) {
       var id = h.id || slugify(h.textContent);
       if (!id) return;
       h.id = id;
-      items.push({ level: h.tagName, id: id, text: h.textContent });
+      items.push({ id: id, text: stripNumbering(h.textContent) });
     });
     if (!items.length) { toc.innerHTML = '<p class="muted">No sections.</p>'; return; }
     toc.innerHTML = '<ul>' + items.map(function (i) {
-      return '<li class="lv-' + i.level + '"><a href="#' + i.id + '">' + i.text + '</a></li>';
+      return '<li><a href="#' + i.id + '">' + i.text + '</a></li>';
     }).join('') + '</ul>';
   };
 })();
