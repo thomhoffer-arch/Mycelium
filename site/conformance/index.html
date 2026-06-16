@@ -23,7 +23,12 @@
   </header>
 
   <main>
-    <article class="wrap spec">
+    <div class="wrap spec-layout">
+      <aside class="toc" aria-label="Contents">
+        <p class="toc-title">Contents</p>
+        <nav id="toc"></nav>
+      </aside>
+      <article id="content" class="spec">
       <p class="kicker">conformance</p>
       <h1>Prove your connector fits.</h1>
       <p class="lede">
@@ -59,7 +64,8 @@ node connectors/reference-connector/connector.mjs</code></pre>
         <a class="btn" href="../build/">Build a connector</a>
         <a class="btn ghost" href="https://github.com/thomhoffer-arch/Mycelium/tree/main/conformance">View the kit on GitHub</a>
       </p>
-    </article>
+      </article>
+    </div>
   </main>
 
   <footer class="wrap">
@@ -79,6 +85,7 @@ node connectors/reference-connector/connector.mjs</code></pre>
 
   <script src="https://cdn.jsdelivr.net/npm/marked@13.0.0/marked.min.js"
           crossorigin="anonymous"></script>
+  <script src="../toc.js"></script>
   <script>
     (async () => {
       const target = document.getElementById('checklist');
@@ -90,6 +97,8 @@ node connectors/reference-connector/connector.mjs</code></pre>
         target.innerHTML = marked.parse(md);
       } catch (e) {
         target.innerHTML = '<p class="muted">Could not load the checklist. <a href="https://github.com/thomhoffer-arch/Mycelium/blob/main/conformance/CHECKLIST.md">View it on GitHub</a>.</p>';
+      } finally {
+        window.buildToc('#content', '#toc');
       }
     })();
   </script>

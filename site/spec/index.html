@@ -51,30 +51,20 @@
 
   <script src="https://cdn.jsdelivr.net/npm/marked@13.0.0/marked.min.js"
           crossorigin="anonymous"></script>
+  <script src="../toc.js"></script>
   <script>
-    const slugify = (s) => s.toLowerCase().trim().replace(/[^\w\s-]/g, '').replace(/\s+/g, '-').replace(/^-+|-+$/g, '');
     (async () => {
       const target = document.getElementById('content');
-      const toc = document.getElementById('toc');
       try {
         const res = await fetch('./connective-spine.md', { cache: 'no-cache' });
         if (!res.ok) throw new Error('HTTP ' + res.status);
         const md = await res.text();
         marked.setOptions({ gfm: true, breaks: false });
         target.innerHTML = marked.parse(md);
-
-        // assign ids + build the table of contents (h2 + h3)
-        const items = [];
-        target.querySelectorAll('h2, h3').forEach((h) => {
-          const id = slugify(h.textContent);
-          if (id) { h.id = id; items.push({ level: h.tagName, id, text: h.textContent }); }
-        });
-        toc.innerHTML = items.length
-          ? '<ul>' + items.map((i) => `<li class="lv-${i.level}"><a href="#${i.id}">${i.text}</a></li>`).join('') + '</ul>'
-          : '<p class="muted">No sections found.</p>';
+        window.buildToc('#content', '#toc');
       } catch (e) {
         target.innerHTML = '<p class="muted">Could not load the spec. <a href="https://github.com/thomhoffer-arch/Mycelium/blob/main/spec/connective-spine.md">View it on GitHub</a>.</p>';
-        toc.innerHTML = '';
+        document.getElementById('toc').innerHTML = '';
       }
     })();
   </script>
