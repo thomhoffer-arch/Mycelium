@@ -75,19 +75,19 @@ freshness:
   revisionId: "{received_time}"
   confidence: live
 extract:                              # source text/fields -> spine join edges
-  deterministic:                      # codifiable -> runs in the adapter (D5)
+  deterministic:                      # codifiable -> runs in the adapter
     - edge: po        regex: "PUR-ORD-\\d{4}-\\d{5}"
     - edge: ifcGuid   regex: "[0-9A-Za-z_$]{22}"
     - edge: doorMark  regex: "(?:mark|deur)\\s*(\\d{2,4})"
     - edge: nlsfb     regex: "\\b\\d{2}\\.\\d{2}\\b"
     - edge: bcf       regex: "B-\\d{3}"
     - edge: zone      match: profile.zones        # zone names from the project profile
-  semantic:                           # fuzzy -> LLM-assisted (D5); low confidence -> needs_review
+  semantic:                           # fuzzy -> LLM-assisted; low confidence -> needs_review
     prompt: "Which work-package / element / clash does this email concern? Return refs + a 0–1 confidence."
 write:                                # OPTIONAL, gated
   - tool: reply_to_email_by_number_tool
     gate: propose-approve-execute     # human approves; never auto-send
-    ledger: true                      # emit a D2 provenance event
+    ledger: true                      # emit a provenance event
 ```
 
 That's it: **point at the upstream MCP, name the read tools, declare a stable id + freshness, list extract patterns.** No bespoke server — the adapter skeleton does the wrapping; the user supplies the mapping.
@@ -104,7 +104,7 @@ for each record from source.read tools:
 # writes go through propose → approve → execute → ledger, calling source.write tools
 ```
 
-## Where each piece lives (D5/D6)
+## Where each piece lives
 
 - **Adapter (open connector):** fetch + normalise + emit edges + the deterministic extractors. No join logic.
 - **Loam (private):** performs the join (email.edges ↔ clash/model/PO) and the semantic linking for the fuzzy cases. The joining logic stays in the orchestrator — connectors only expose the keys.
