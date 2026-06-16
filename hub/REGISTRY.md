@@ -11,7 +11,7 @@ tested against a real model/project).
 
 | Connector | Tool | Contract | Status | Repo |
 |---|---|---|---|---|
-| **mycelium-revit-connector** | Autodesk Revit | model-source v0.1 | 🧪 | `thomhoffer-arch/mycelium-revit-connector` *(was `loam-revit-connector`)* |
+| **mycelium-connector-revit** | Autodesk Revit | model-source v0.1 | 🧪 | [`thomhoffer-arch/mycelium-connector-revit`](https://github.com/thomhoffer-arch/mycelium-connector-revit) |
 | mycelium-archicad-connector | Graphisoft ArchiCAD | model-source v0.2 *(wanted)* | — | *unclaimed — build it* |
 | mycelium-rhino-connector | McNeel Rhino | model-source v0.2 *(wanted)* | — | *unclaimed — build it* |
 | pdra | Revit (commercial superset) | model-source v0.1 | commercial | `thomhoffer-arch/PDRA` |
