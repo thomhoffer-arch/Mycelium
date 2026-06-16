@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Connective Spine — Mycelium</title>
+  <meta name="description" content="The Mycelium Connective Spine — identity, freshness and provenance contract every connector conforms to." />
+  <link rel="stylesheet" href="../style.css" />
+  <link rel="stylesheet" href="./spec.css" />
+</head>
+<body>
+  <header class="nav">
+    <div class="wrap">
+      <a class="mark" href="../">Mycelium</a>
+      <nav>
+        <a href="../#what">What</a>
+        <a href="../#build">Build</a>
+        <a href="../#loam">Loam</a>
+        <a class="ghost" href="https://github.com/thomhoffer-arch/Mycelium">GitHub</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <article id="content" class="wrap spec">
+      <p class="muted">Loading the spec…</p>
+    </article>
+  </main>
+
+  <footer class="wrap">
+    <div class="foot">
+      <span class="mark small">Mycelium</span>
+      <nav>
+        <a href="./">Spec</a>
+        <a href="https://github.com/thomhoffer-arch/Mycelium/tree/main/conformance">Conformance</a>
+        <a href="https://github.com/thomhoffer-arch/Mycelium/tree/main/connectors">Connectors</a>
+        <a href="https://github.com/thomhoffer-arch/Mycelium/blob/main/hub/REGISTRY.md">Hub</a>
+        <a href="https://github.com/thomhoffer-arch/Mycelium">GitHub</a>
+      </nav>
+      <span class="muted">An open standard · Apache-2.0</span>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/marked@13.0.0/marked.min.js"
+          crossorigin="anonymous"></script>
+  <script>
+    (async () => {
+      const target = document.getElementById('content');
+      try {
+        const res = await fetch('./connective-spine.md', { cache: 'no-cache' });
+        if (!res.ok) throw new Error('HTTP ' + res.status);
+        const md = await res.text();
+        marked.setOptions({ gfm: true, breaks: false });
+        target.innerHTML = marked.parse(md);
+      } catch (e) {
+        target.innerHTML = '<p class="muted">Could not load the spec. <a href="https://github.com/thomhoffer-arch/Mycelium/blob/main/spec/connective-spine.md">View it on GitHub</a>.</p>';
+      }
+    })();
+  </script>
+</body>
+</html>
