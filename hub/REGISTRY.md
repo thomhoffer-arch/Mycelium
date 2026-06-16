@@ -20,10 +20,10 @@ tested against a real model/project).
 
 | Connector | Source | Join key | Status | Repo |
 |---|---|---|---|---|
-| mycelium-connector-reference | (in-repo example) | n/a | 🧪 | this repo `/connectors/reference-connector` |
-| mycelium-connector-email | Outlook/IMAP | `po` / `nlsfb` / `bcf` / `zone` | 🧪 | this repo `/connectors/example-email` |
-| mycelium-connector-erpnext | ERPNext | `classification` / `workPackage` | 🧪 | this repo `/connectors/example-erpnext` |
-| mycelium-connector-bcf | BCF | `ifcGuid` / `zone` | 🧪 | this repo `/connectors/example-bcf` |
+| mycelium-connector-reference | (in-repo example) | n/a | 🧪 | [`/connectors/reference-connector`](https://github.com/thomhoffer-arch/Mycelium/tree/main/connectors/reference-connector) |
+| mycelium-connector-email | Outlook/IMAP | `po` / `nlsfb` / `bcf` / `zone` | 🧪 | [`/connectors/example-email`](https://github.com/thomhoffer-arch/Mycelium/tree/main/connectors/example-email) |
+| mycelium-connector-erpnext | ERPNext | `classification` / `workPackage` | 🧪 | [`/connectors/example-erpnext`](https://github.com/thomhoffer-arch/Mycelium/tree/main/connectors/example-erpnext) |
+| mycelium-connector-bcf | BCF | `ifcGuid` / `zone` | 🧪 | [`/connectors/example-bcf`](https://github.com/thomhoffer-arch/Mycelium/tree/main/connectors/example-bcf) |
 | openaec | OpenAEC Studio (IFCX/BCF) | `ifcGuid` | 🧪 | *draft* |
 | dalux | Dalux Field/Build issues | `ifcGuid` | 🧪 | *draft* |
 | forma | Autodesk Forma (early design) | `zone` / `classification` | 🧪 | *draft (US SaaS — onramp only)* |
