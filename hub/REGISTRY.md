@@ -1,23 +1,28 @@
-# Mycelium Hub — connector registry
+# Mycelium hub — connector registry
 
-The index of connectors and third-party hubs that conform to the **Connective Spine**. Connectors
-live in their own repos; this hub only **indexes** them. To add yours: open a PR adding a row.
+The index of conformant connectors. The hub **links** connectors; each lives in **its own repo**
+(independent stack/cadence/license). To add one: implement a contract, pass the conformance kit,
+open a PR adding a row here.
 
-| Connector | Source | Spine version | Repo | License | Maintainer | Status |
-|---|---|---|---|---|---|---|
-| `mycelium-connector-reference` | (example) | v0.1 | this repo `/connectors/reference-connector` | Apache-2.0 | Mycelium | reference |
-| _add yours_ | … | v0.1 | … | … | … | proposed |
+**Maturity:** 🧪 experimental · 🟡 community (works, unverified) · ✅ verified (conformance kit +
+tested against a real model/project).
 
-## How to register
-1. Your connector passes `conformance/` against the spine version it targets.
-2. Its README **declares that version** and links the spine it conforms to.
-3. Open a PR adding a row above: name (`mycelium-connector-<source>`), source, spine version, repo
-   URL, license, maintainer, status (proposed | reference | verified).
+## Model sources (implement [`spec/model-source-contract.md`](../spec/model-source-contract.md))
 
-## Third-party hubs
-Other registries/marketplaces that list spine-conformant connectors can be linked here too — the
-spine is the contract; hubs are not gatekeepers.
+| Connector | Tool | Contract | Status | Repo |
+|---|---|---|---|---|
+| **mycelium-revit-connector** | Autodesk Revit | model-source v0.1 | 🧪 | `thomhoffer-arch/mycelium-revit-connector` *(was `loam-revit-connector`)* |
+| mycelium-archicad-connector | Graphisoft ArchiCAD | model-source v0.2 *(wanted)* | — | *unclaimed — build it* |
+| mycelium-rhino-connector | McNeel Rhino | model-source v0.2 *(wanted)* | — | *unclaimed — build it* |
+| pdra | Revit (commercial superset) | model-source v0.1 | commercial | `thomhoffer-arch/PDRA` |
 
-| Hub | Scope | URL |
-|---|---|---|
-| _add_ | … | … |
+## Other sources (implement [`spec/connective-spine.md`](../spec/connective-spine.md) via the spine adapter)
+
+| Connector | Source | Join key | Status | Repo |
+|---|---|---|---|---|
+| openaec | OpenAEC Studio (IFCX/BCF) | `ifcGuid` | 🧪 | *draft* |
+| dalux | Dalux Field/Build issues | `ifcGuid` | 🧪 | *draft* |
+| forma | Autodesk Forma (early design) | `zone` / `classification` | 🧪 | *draft (US SaaS — onramp only)* |
+
+> Connectors touch live models and project data — the **verified** badge (conformance kit + real
+> project) is the trust signal. Prefer verified for production.

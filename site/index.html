@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Mycelium — the open connective spine for AEC data</title>
+  <meta name="description" content="One open contract — identity, freshness, provenance — so model, clash, finance and field data join across every AEC tool. Build a connector; plug into the network." />
+  <meta property="og:title" content="Mycelium — the open connective spine for AEC data" />
+  <meta property="og:description" content="Build a connector. Plug into the network. An open standard for joining AEC data across tools." />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="nav">
+    <div class="wrap">
+      <span class="mark">Mycelium</span>
+      <nav>
+        <a href="#what">What</a>
+        <a href="#build">Build</a>
+        <a href="#loam">Loam</a>
+        <a class="ghost" href="https://github.com/thomhoffer-arch/Mycelium">GitHub</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero wrap">
+      <p class="kicker">open standard · Apache-2.0 · EU-rooted</p>
+      <h1>The open connective spine<br />for AEC data.</h1>
+      <p class="lede">
+        One contract — <b>identity · freshness · provenance</b> — so model, clash, finance and field
+        data join across every tool. Expose your source as spine records over MCP, and it plugs into
+        the network.
+      </p>
+      <div class="cta">
+        <a class="btn" href="https://github.com/thomhoffer-arch/Mycelium/blob/main/spec/connective-spine.md">Read the spec</a>
+        <a class="btn ghost" href="https://github.com/thomhoffer-arch/Mycelium/tree/main/connectors">Build a connector</a>
+      </div>
+    </section>
+
+    <section id="what" class="wrap grid">
+      <article>
+        <h3>Connective spine</h3>
+        <p>A tiny, versioned contract every source conforms to: a stable identity, a freshness stamp,
+        and a hash-chained provenance event. Join on opaque keys — no human names required.</p>
+      </article>
+      <article>
+        <h3>Connectors</h3>
+        <p>Any source — Revit, ArchiCAD, Rhino, ERPNext, BCF, email — becomes spine records over MCP,
+        REST or files. Each connector is its own open repo; the hub indexes them.</p>
+      </article>
+      <article>
+        <h3>Conformance</h3>
+        <p>A zero-dependency kit proves your connector fits the contract before it ships. Pass it,
+        register in the hub, carry the verified badge.</p>
+      </article>
+    </section>
+
+    <section id="build" class="wrap build">
+      <h2>Build on it.</h2>
+      <p class="lede">Any tool can join the network. A spine record is just this:</p>
+      <pre><code>{
+  "identity":  { "source": "revit", "sourceLocalId": "…",
+                 "projectKey": "…", "ifcGuid": "0X3$tP9…" },
+  "freshness": { "source": "revit", "revisionId": "g/58", "confidence": "live" }
+}</code></pre>
+      <p class="muted">Emit that, and an orchestrator can join, triage and account for your data —
+      alongside everyone else's. Open, neutral, no lock-in.</p>
+    </section>
+
+    <section id="loam" class="wrap loam">
+      <p class="kicker">growing in the network</p>
+      <h2>Loam.</h2>
+      <p class="lede">The intelligence that grows in Mycelium — sovereign, cited, accountable.
+      Joins your tools into one decision-grade answer, and keeps your data on your machine.</p>
+      <p class="soon">Coming soon.</p>
+    </section>
+  </main>
+
+  <footer class="wrap">
+    <div class="foot">
+      <span class="mark small">Mycelium</span>
+      <nav>
+        <a href="https://github.com/thomhoffer-arch/Mycelium/blob/main/spec/connective-spine.md">Spec</a>
+        <a href="https://github.com/thomhoffer-arch/Mycelium/tree/main/conformance">Conformance</a>
+        <a href="https://github.com/thomhoffer-arch/Mycelium/tree/main/connectors">Connectors</a>
+        <a href="https://github.com/thomhoffer-arch/Mycelium/blob/main/hub/REGISTRY.md">Hub</a>
+        <a href="https://github.com/thomhoffer-arch/Mycelium">GitHub</a>
+      </nav>
+      <span class="muted">An open standard · Apache-2.0</span>
+    </div>
+  </footer>
+</body>
+</html>
