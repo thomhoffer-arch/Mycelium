@@ -1,0 +1,25 @@
+{
+  "name": "mycelium-sdk",
+  "version": "0.1.0",
+  "description": "Connective Spine v0.1 — identity, freshness, provenance for AEC data interoperability",
+  "type": "module",
+  "exports": {
+    ".": "./index.mjs",
+    "./model-source": "./model-source.mjs"
+  },
+  "files": [
+    "index.mjs",
+    "model-source.mjs",
+    "README.md"
+  ],
+  "keywords": [
+    "BIM", "AEC", "IFC", "MCP", "interoperability", "open-standard", "connective-spine"
+  ],
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/thomhoffer-arch/Mycelium.git",
+    "directory": "packages/mycelium-sdk"
+  },
+  "engines": { "node": ">=18" }
+}

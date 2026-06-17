@@ -2,8 +2,7 @@
 // BCF connector — translates BCF topics into spine identity records.
 // Each topic carries an ifcGuid (model-side) and a zone; we also derive the
 // uniqueId-equivalent from the topic's stored Revit UniqueId when present.
-import { runAdapter } from '../../lib/spine-adapter.mjs';
-import { deriveIfcGuid } from '../../lib/derive-ifc-guid.mjs';
+import { runAdapter, deriveIfcGuid } from 'mycelium-sdk';
 
 const config = {
   source: 'bcf',

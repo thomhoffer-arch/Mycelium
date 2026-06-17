@@ -2,7 +2,7 @@
 // Reference Mycelium connector (v0.1).
 // Demonstrates the spine-adapter library against an in-memory source.
 // Replace `fetchSource()` with a real MCP/REST call; keep the config shape.
-import { runAdapter } from '../../lib/spine-adapter.mjs';
+import { runAdapter } from 'mycelium-sdk';
 
 const config = {
   source: 'reference',

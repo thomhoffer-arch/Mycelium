@@ -12,6 +12,8 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '20'
+      - name: install workspace dependencies
+        run: npm install
       - name: validate sample
         run: node conformance/validate.mjs conformance/sample.json
       - name: reference connector self-certifies
