@@ -23,9 +23,11 @@ tested against a real model/project).
 | mycelium-for-email | Outlook/IMAP | `po` / `nlsfb` / `bcf` / `zone` | 🧪 | [`/connectors/example-email`](https://github.com/thomhoffer-arch/Mycelium/tree/main/connectors/example-email) |
 | mycelium-for-erpnext | ERPNext | `classification` / `workPackage` | 🧪 | [`/connectors/example-erpnext`](https://github.com/thomhoffer-arch/Mycelium/tree/main/connectors/example-erpnext) |
 | mycelium-for-bcf | BCF | `ifcGuid` / `zone` | 🧪 | [`/connectors/example-bcf`](https://github.com/thomhoffer-arch/Mycelium/tree/main/connectors/example-bcf) |
-| mycelium-for-openaec | OpenAEC Studio (IFCX/BCF) | `ifcGuid` | 🧪 | *draft* |
-| mycelium-for-dalux | Dalux Field/Build issues | `ifcGuid` | 🧪 | *draft* |
-| mycelium-for-forma | Autodesk Forma (early design) | `zone` / `classification` | 🧪 | *draft (US SaaS — onramp only)* |
+| mycelium-for-openaec | OpenAEC Studio (IFCX/BCF) | `ifcGuid` | 🧪 | [`thomhoffer-arch/Mycelium-for-OpenAEC`](https://github.com/thomhoffer-arch/Mycelium-for-OpenAEC) |
+| mycelium-for-dalux | Dalux Field/Build issues | `ifcGuid` | 🧪 | [`thomhoffer-arch/Mycelium-for-Dalux`](https://github.com/thomhoffer-arch/Mycelium-for-Dalux) |
+| mycelium-for-forma | Autodesk Forma (early design) | `zone` / `classification` | 🧪 | [`thomhoffer-arch/Mycelium-for-Forma`](https://github.com/thomhoffer-arch/Mycelium-for-Forma) |
+| mycelium-for-qonic | Qonic | `ifcGuid` / `classification` | 🧪 | [`thomhoffer-arch/Mycelium-for-Qonic`](https://github.com/thomhoffer-arch/Mycelium-for-Qonic) |
+| mycelium-for-bim2rdt | BIM2RDT (robot-ready site digital twins) | `ifcGuid` / `zone` / `workPackage` | 🧪 | [`thomhoffer-arch/Mycelium-for-BIM2RDT`](https://github.com/thomhoffer-arch/Mycelium-for-BIM2RDT) |
 
 > Connectors touch live models and project data — the **verified** badge (conformance kit + real
 > project) is the trust signal. Prefer verified for production.
