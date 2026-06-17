@@ -2,7 +2,7 @@
 // Example "email" connector — shows the spine adapter's edge-extraction path
 // from the Outlook adapter pattern in SPINE_ADAPTER_TEMPLATE.md. The upstream
 // is faked here so the demo runs offline.
-import { runAdapter } from '../../lib/spine-adapter.mjs';
+import { runAdapter } from 'mycelium-sdk';
 
 const config = {
   source: 'outlook',

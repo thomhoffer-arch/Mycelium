@@ -2,7 +2,7 @@
 // ERPNext connector — translates Purchase Orders into spine identity records.
 // Joins via classification (NL-SfB) and workPackage; never carries a model GUID.
 // Replace `fetchSource()` with a real ERPNext REST call; keep the shape.
-import { runAdapter } from '../../lib/spine-adapter.mjs';
+import { runAdapter } from 'mycelium-sdk';
 
 const config = {
   source: 'erpnext',

@@ -6,6 +6,7 @@
 import { readFileSync } from 'node:fs';
 
 const PLACEHOLDER = /^_?(add|add yours|…|tbd|—|-)_?$/i;
+// Accepts mycelium-for-<tool> (new) and mycelium-connector-<tool> (legacy) plus bare slugs.
 const NAME_RE = /^[*_`]*[a-z][a-z0-9-]*[*_`]*$/i;
 const KNOWN_STATUS = /(🧪|🟡|✅|—|commercial|verified|community|experimental|reference|proposed)/i;
 
