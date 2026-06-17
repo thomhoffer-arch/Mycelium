@@ -4,7 +4,7 @@
   padding-block: 3rem;
   line-height: 1.6;
 }
-.spec h1 { font-size: 2rem; margin-top: 0; }
+.spec h1 { margin-top: 0; }
 .spec h2 { margin-top: 2.2rem; }
 .spec h3 { margin-top: 1.6rem; }
 .spec h1 code, .spec h2 code, .spec h3 code, .spec h4 code {
@@ -21,8 +21,14 @@
   padding: 1rem;
   overflow-x: auto;
   font-size: 0.85rem;
+  max-width: 100%;
 }
 .spec code { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; }
+@media (max-width: 720px) {
+  .spec pre { padding: 0.8rem 0.9rem; border-radius: 6px; font-size: 0.75rem; }
+  .spec code { font-size: 0.78rem; }
+  .spec pre code { font-size: inherit; }
+}
 .spec table {
   border-collapse: collapse;
   margin-block: 1rem;
