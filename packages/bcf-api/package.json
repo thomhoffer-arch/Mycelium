@@ -1,0 +1,10 @@
+{
+  "name": "mycelium-bcf-api",
+  "version": "0.1.0",
+  "description": "Canonical BCF topic → Connective Spine mapping. Vendored into each BCF-speaking connector (Dalux, Solibri, BIMcollab).",
+  "type": "module",
+  "exports": { ".": "./bcf-api.mjs" },
+  "files": ["bcf-api.mjs", "README.md"],
+  "license": "Apache-2.0",
+  "engines": { "node": ">=18" }
+}

@@ -1,19 +1,20 @@
 # example-bcf-api
 
-A **live** BCF source over the buildingSMART **BCF-API** (the REST web service),
-not the `.bcfzip` file format. One adapter, many servers: BIMcollab Cloud,
-Solibri BCF Live, Dalux — all speak the same standard, so only a per-vendor
-**preset** (base URL + auth + field names) changes.
+Shows how a BCF-speaking connector turns live BCF topics into spine records
+using the **canonical mapping** in [`packages/bcf-api`](../../packages/bcf-api)
+(`topicToRow` / `makeBcfApiFetch`).
 
 ```bash
-node connector.mjs                 # mock BIMcollab preset, runs offline
-BCF_VENDOR=solibri node connector.mjs
+node connector.mjs     # maps a mock topic through the shared mapping
 ```
 
-Why this exists alongside [`example-bcf`](../example-bcf): that one reads
-exported files (`confidence: 'snapshot'`); this one reads the API
-(`confidence: 'live'`) and is the basis for write-back. The production version
-with a real REST client lives in its own repo — see
-[`scaffolds/mycelium-for-bcf-api`](../../scaffolds/mycelium-for-bcf-api).
+There is **no generic BCF-API connector**. Each tool ships a complete,
+standalone package that *vendors* this mapping (like it vendors the SDK):
 
-Join keys: `ifcGuid` (primary) + `zone`.
+- **Mycelium-for-Dalux** — live BCF-API/REST (finish the existing repo).
+- **Mycelium-for-Solibri** — `/bcfxml` issues (this mapping) + native QA results.
+  See [`scaffolds/mycelium-for-solibri`](../../scaffolds/mycelium-for-solibri).
+- **Mycelium-for-BIMcollab** — same pattern, when wanted.
+
+`confidence: 'live'` here vs the file-based [`example-bcf`](../example-bcf)'s
+`'snapshot'`. Join keys: `ifcGuid` (primary) + `zone`.

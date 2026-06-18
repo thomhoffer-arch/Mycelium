@@ -1,31 +1,42 @@
 # scaffolds — standalone connector repo seeds
 
-These are **complete, drop-in seeds for new repositories** — not part of the
-Mycelium monorepo build (they're outside the `workspaces` globs on purpose).
-Each folder is meant to be copied/moved into its **own** repo, matching the
-registry's "each connector lives in its own repo" rule.
+Complete, **drop-in seeds for new repositories** — not part of the Mycelium
+monorepo build (they sit outside the `workspaces` globs on purpose). Each folder
+is a **complete, self-contained package** meant to be copied into its **own**
+repo: install one package, set env vars, run — no shared lib to wire up.
 
 | Folder | New repo | Stack | Build in one go |
 |---|---|---|---|
-| `mycelium-for-bcf-api` | `thomhoffer-arch/mycelium-for-bcf-api` | Node ≥18, zero-dep (vendored SDK) | `node connector.mjs` / `npm test` |
-| `mycelium-for-solibri` | `thomhoffer-arch/mycelium-for-solibri` | Node ≥18, zero-dep (vendored SDK) | `node connector.mjs` / `npm test` |
-| `mycelium-for-navisworks` | `thomhoffer-arch/mycelium-for-navisworks` | C# / .NET Framework 4.8 add-in | `./build.ps1` (needs local Navisworks DLLs) |
+| `mycelium-for-solibri` | `thomhoffer-arch/mycelium-for-solibri` | Node ≥18, zero-dep | `node connector.mjs` / `npm test` |
+| `mycelium-for-navisworks` | `thomhoffer-arch/mycelium-for-navisworks` | C# / .NET 4.8 add-in | `./build.ps1` (needs local Navisworks DLLs) |
+
+> **Dalux** is not seeded here — it's an existing published repo
+> ([`Mycelium-for-Dalux`](https://github.com/thomhoffer-arch/Mycelium-for-Dalux))
+> to finish in place (OAuth/pagination/write-back). It already is the live
+> BCF-API/REST pattern. **BIMcollab**, when wanted, follows the same
+> one-package shape.
+
+## Self-contained, by design
+
+Each Node seed **vendors** what it needs:
+
+- `vendor/mycelium-sdk.mjs` — the zero-dep Connective Spine SDK.
+- `vendor/bcf-api.mjs` — the canonical BCF topic→spine mapping (only in
+  BCF-speaking connectors), copied from `packages/bcf-api`.
+
+No second install, no shared dependency. The cost is re-syncing those vendored
+files when the canonical source changes (`cp packages/bcf-api/bcf-api.mjs
+vendor/bcf-api.mjs`) — the same trade every connector already accepts for the SDK.
+
+Each seed runs **offline against mock data** so it builds green immediately; set
+the documented environment variables to point it at a real tool.
 
 ## To stand one up
 
 ```bash
-# create the new repo, then:
-cp -r scaffolds/mycelium-for-bcf-api/* path/to/new-repo/
+cp -r scaffolds/mycelium-for-solibri/* path/to/new-repo/
 cd path/to/new-repo && git init && npm test
 ```
 
-The two Node seeds **vendor** the zero-dep Connective Spine SDK at
-`vendor/mycelium-sdk.mjs` so they run with no install and no network. Swap it
-for the published `mycelium-sdk` package once that's on a registry.
-
-Each seed runs **offline against mock data** so it builds green immediately;
-set the documented environment variables to point it at a real server/tool.
-
-> Once copied out, you can delete the corresponding folder here — these seeds
-> are a convenience, the registry rows in `hub/REGISTRY.md` are the source of
-> truth for where each connector lives.
+> Once copied out, you can delete the corresponding folder here — the registry
+> rows in `hub/REGISTRY.md` are the source of truth for where each connector lives.

@@ -1,49 +1,34 @@
 #!/usr/bin/env node
-// BCF-API connector (example) — a LIVE issue source over the buildingSMART
-// BCF-API (the REST web service), as opposed to reading exported .bcfzip files.
+// Example: how a BCF-API connector uses the canonical mapping.
 //
-// One adapter covers every BCF-API-compliant server — BIMcollab Cloud,
-// Solibri BCF Live, Dalux, … — because they all speak the same standard. Only
-// the *preset* (base URL + auth + a few field names) differs per vendor; the
-// spine mapping is identical. This in-repo example uses mock topics so it runs
-// offline; the standalone repo `mycelium-for-bcf-api` wires a real REST client
-// into `fetchSource` (see scaffolds/).
+// There is NO generic "BCF-API" connector. Each tool ships its own complete,
+// standalone package (Mycelium-for-Dalux, Mycelium-for-BIMcollab, …) that
+// VENDORS the canonical BCF topic→spine mapping (`packages/bcf-api`) the same
+// way it vendors the SDK. This example shows that mapping in action against
+// mock topics so the pattern is copy-pasteable. confidence:'live' = the API
+// path, vs example-bcf's file-based 'snapshot'.
 import { runAdapter, deriveIfcGuid } from 'mycelium-sdk';
+import { topicToRow } from 'mycelium-bcf-api';
 
-// A preset is just a spine `config` (same shape as example-bcf) for one vendor.
-// confidence:'live' is the upgrade over reading exported files (snapshot).
-const PRESETS = {
-  bimcollab: {
-    source: 'bimcollab',
-    identity: { uniqueId: 'bcf:{topicGuid}', projectKey: '{project}', localIdField: 'topicGuid' },
-    freshness: { revisionId: '{modifiedDate}', asOf: '{modifiedDate}', confidence: 'live' },
-  },
-  solibri: {
-    source: 'solibri-live',
-    identity: { uniqueId: 'bcf:{topicGuid}', projectKey: '{project}', localIdField: 'topicGuid' },
-    freshness: { revisionId: '{modifiedDate}', asOf: '{modifiedDate}', confidence: 'live' },
-  },
+const config = {
+  source: 'dalux', // a real connector picks its own vendor/source
+  identity: { uniqueId: 'bcf:{localId}', projectKey: '{project}', localIdField: 'localId' },
+  freshness: { revisionId: '{modified}', asOf: '{modified}', confidence: 'live' },
 };
 
-const vendor = process.env.BCF_VENDOR ?? 'bimcollab';
-const config = PRESETS[vendor];
-if (!config) throw new Error(`unknown BCF_VENDOR "${vendor}" (have: ${Object.keys(PRESETS).join(', ')})`);
-
-// Real connectors call the BCF-API over HTTP here; this example returns one
-// mock topic so it runs with no network. A topic's ifcGuid comes from its
-// viewpoint component selection; when only a Revit UniqueId is present we
-// derive the IFC GlobalId deterministically.
+// Real connectors build fetchSource from makeBcfApiFetch (REST) or a tool's own
+// client; here we map one mock topic through the shared topicToRow().
 async function fetchSource() {
-  return [
+  const topics = [
     {
-      topicGuid: 'B-033',
+      guid: 'B-033',
       project: 'horizons',
-      revitUniqueId: 'aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee-00000042',
-      modelInstanceId: 'verguid-ae5e3f31',
+      revit_unique_id: 'aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee-00000042',
       zone: { kind: 'storey', id: 'B01', name: 'B – onderbouw' },
-      modifiedDate: '2026-06-17T09:15:00Z',
+      modified_date: '2026-06-17T09:15:00Z',
     },
-  ].map((r) => ({ ...r, ifcGuid: deriveIfcGuid(r.revitUniqueId) }));
+  ];
+  return topics.map((t) => topicToRow(t, { projectKey: t.project, deriveIfcGuid }));
 }
 
 const result = await runAdapter(config, { fetchSource });
