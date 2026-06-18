@@ -23,8 +23,8 @@ tested against a real model/project).
 | mycelium-for-email | Outlook/IMAP | `po` / `nlsfb` / `bcf` / `zone` | 🧪 | [`/connectors/example-email`](https://github.com/thomhoffer-arch/Mycelium/tree/main/connectors/example-email) |
 | mycelium-for-erpnext | ERPNext | `classification` / `workPackage` | 🧪 | [`/connectors/example-erpnext`](https://github.com/thomhoffer-arch/Mycelium/tree/main/connectors/example-erpnext) |
 | mycelium-for-bcf | BCF (exported `.bcfzip` files) | `ifcGuid` / `zone` | 🧪 | [`/connectors/example-bcf`](https://github.com/thomhoffer-arch/Mycelium/tree/main/connectors/example-bcf) |
-| mycelium-for-solibri | Solibri issues (`/bcfxml`) + checking/QA results (local REST) | `ifcGuid` / `zone` | 🧪 | [`thomhoffer-arch/mycelium-for-solibri`](https://github.com/thomhoffer-arch/mycelium-for-solibri) *(seed in `/scaffolds`)* |
-| mycelium-for-navisworks | Navisworks Clash Detective (.NET add-in) | `ifcGuid` / `classification` / `zone` | 🧪 | [`thomhoffer-arch/mycelium-for-navisworks`](https://github.com/thomhoffer-arch/mycelium-for-navisworks) *(seed in `/scaffolds`)* |
+| mycelium-for-solibri | Solibri issues (`/bcfxml`) + checking/QA results (local REST) | `ifcGuid` / `zone` | 🧪 | [`thomhoffer-arch/Mycelium-for-Solibri`](https://github.com/thomhoffer-arch/Mycelium-for-Solibri) |
+| mycelium-for-navisworks | Navisworks Clash Detective (.NET add-in) | `ifcGuid` / `classification` / `zone` | 🧪 | [`thomhoffer-arch/Mycelium-for-Navisworks`](https://github.com/thomhoffer-arch/Mycelium-for-Navisworks) |
 | mycelium-for-openaec | OpenAEC Studio (IFCX/BCF) | `ifcGuid` | 🧪 | [`thomhoffer-arch/Mycelium-for-OpenAEC`](https://github.com/thomhoffer-arch/Mycelium-for-OpenAEC) |
 | mycelium-for-dalux | Dalux Field/Build issues (live BCF-API/REST) | `ifcGuid` | 🧪 | [`thomhoffer-arch/Mycelium-for-Dalux`](https://github.com/thomhoffer-arch/Mycelium-for-Dalux) |
 | mycelium-for-forma | Autodesk Forma (early design) | `zone` / `classification` | 🧪 | [`thomhoffer-arch/Mycelium-for-Forma`](https://github.com/thomhoffer-arch/Mycelium-for-Forma) |
