@@ -22,7 +22,10 @@ tested against a real model/project).
 | mycelium-for-reference | (in-repo example) | n/a | 🧪 | [`/connectors/reference-connector`](https://github.com/thomhoffer-arch/Mycelium/tree/main/connectors/reference-connector) |
 | mycelium-for-email | Outlook/IMAP | `po` / `nlsfb` / `bcf` / `zone` | 🧪 | [`/connectors/example-email`](https://github.com/thomhoffer-arch/Mycelium/tree/main/connectors/example-email) |
 | mycelium-for-erpnext | ERPNext | `classification` / `workPackage` | 🧪 | [`/connectors/example-erpnext`](https://github.com/thomhoffer-arch/Mycelium/tree/main/connectors/example-erpnext) |
-| mycelium-for-bcf | BCF | `ifcGuid` / `zone` | 🧪 | [`/connectors/example-bcf`](https://github.com/thomhoffer-arch/Mycelium/tree/main/connectors/example-bcf) |
+| mycelium-for-bcf | BCF (exported `.bcfzip` files) | `ifcGuid` / `zone` | 🧪 | [`/connectors/example-bcf`](https://github.com/thomhoffer-arch/Mycelium/tree/main/connectors/example-bcf) |
+| mycelium-for-bcf-api | BCF-API live REST (BIMcollab Cloud · Solibri BCF Live · Dalux) | `ifcGuid` / `zone` | 🧪 | [`thomhoffer-arch/mycelium-for-bcf-api`](https://github.com/thomhoffer-arch/mycelium-for-bcf-api) *(seed in `/scaffolds`)* |
+| mycelium-for-solibri | Solibri checking/QA results (native REST API) | `ifcGuid` / `zone` | 🧪 | [`thomhoffer-arch/mycelium-for-solibri`](https://github.com/thomhoffer-arch/mycelium-for-solibri) *(seed in `/scaffolds`)* |
+| mycelium-for-navisworks | Navisworks Clash Detective (.NET add-in) | `ifcGuid` / `classification` / `zone` | 🧪 | [`thomhoffer-arch/mycelium-for-navisworks`](https://github.com/thomhoffer-arch/mycelium-for-navisworks) *(seed in `/scaffolds`)* |
 | mycelium-for-openaec | OpenAEC Studio (IFCX/BCF) | `ifcGuid` | 🧪 | [`thomhoffer-arch/Mycelium-for-OpenAEC`](https://github.com/thomhoffer-arch/Mycelium-for-OpenAEC) |
 | mycelium-for-dalux | Dalux Field/Build issues | `ifcGuid` | 🧪 | [`thomhoffer-arch/Mycelium-for-Dalux`](https://github.com/thomhoffer-arch/Mycelium-for-Dalux) |
 | mycelium-for-forma | Autodesk Forma (early design) | `zone` / `classification` | 🧪 | [`thomhoffer-arch/Mycelium-for-Forma`](https://github.com/thomhoffer-arch/Mycelium-for-Forma) |

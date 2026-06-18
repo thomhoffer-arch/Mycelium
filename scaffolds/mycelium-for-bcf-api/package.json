@@ -1,0 +1,13 @@
+{
+  "name": "mycelium-for-bcf-api",
+  "version": "0.1.0",
+  "description": "Mycelium connector — live BCF-API (buildingSMART) source: BIMcollab Cloud, Solibri BCF Live, Dalux. Spine adapter, zero runtime deps.",
+  "type": "module",
+  "license": "Apache-2.0",
+  "engines": { "node": ">=18" },
+  "bin": { "mycelium-for-bcf-api": "connector.mjs" },
+  "scripts": {
+    "start": "node connector.mjs",
+    "test": "node --test"
+  }
+}
