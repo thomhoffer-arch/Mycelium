@@ -3,7 +3,7 @@
   --bg-soft: #11140f;
   --fg: #e8ebe4;
   --muted: #9aa39a;
-  --accent: #6fae8c;       /* mycelium / loam green */
+  --accent: #6fae8c;       /* mycelium / studio green */
   --accent-soft: #2a3a30;
   --line: #1e241d;
   --mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, monospace;
@@ -64,9 +64,9 @@ code { font-family: var(--mono); font-size: .9rem; color: #cfe8d8; }
 @media (prefers-reduced-motion: reduce) { .caret { animation: none; } }
 .muted { color: var(--muted); }
 
-/* loam */
-.loam { padding: 4rem 0; border-top: 1px solid var(--line); margin-top: 3rem; }
-.loam h2 { color: var(--accent); }
+/* studio */
+.studio { padding: 4rem 0; border-top: 1px solid var(--line); margin-top: 3rem; }
+.studio h2 { color: var(--accent); }
 .soon { display: inline-block; margin-top: 1rem; border: 1px solid var(--accent-soft); color: var(--accent); padding: .35rem .9rem; border-radius: 999px; font-size: .85rem; letter-spacing: .04em; }
 
 /* footer */
