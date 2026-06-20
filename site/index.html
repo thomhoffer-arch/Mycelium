@@ -3,6 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'" />
   <title>Mycelium — open BIM interoperability for AEC data (Apache-2.0)</title>
   <meta name="description" content="Mycelium is the open Connective Spine for AEC data — a small contract every tool in the chain can speak so design, build, finance, schedule, field and handover data can be joined across vendors. For BIM coordinators, project managers, foremen, surveyors, FM and owners. EU-rooted, Apache-2.0, no lock-in. Portable beyond AEC." />
   <meta name="keywords" content="open BIM interoperability, AEC data integration, BIM data standard, IFC join, BCF connector, MCP for AEC, open construction data, BIM sovereignty GDPR, Revit ERP integration, project management data integration AEC, construction cost data join, facility management open standard, BIM to FM handover, asset register from BIM, open alternative BIM 360 ProjectWise, warehouse asset open standard, office FM IoT, hospital asset lifecycle, factory digital twin open standard" />
@@ -100,30 +101,7 @@
     </section>
   </main>
 
-  <script>
-    (() => {
-      const code = document.getElementById('spine-snippet');
-      if (!code) return;
-      const text = code.dataset.source || '';
-      const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-      if (reduce) { code.textContent = text; return; }
-      let i = 0;
-      const tick = () => {
-        if (i >= text.length) return;
-        code.textContent += text[i++];
-        const ch = text[i - 1];
-        // type a bit faster after newlines/indent, a touch slower on punctuation
-        const delay = ch === '\n' ? 20 : ch === ' ' ? 12 : /[{}\[\]:,]/.test(ch) ? 45 : 22;
-        setTimeout(tick, delay);
-      };
-      const start = () => { if (!code.textContent) tick(); };
-      if ('IntersectionObserver' in window) {
-        new IntersectionObserver((entries, obs) => {
-          if (entries.some((e) => e.isIntersecting)) { obs.disconnect(); start(); }
-        }, { threshold: 0.3 }).observe(code);
-      } else { start(); }
-    })();
-  </script>
+  <script src="./typing.js"></script>
 
   <footer class="wrap">
     <div class="foot">

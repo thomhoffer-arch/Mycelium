@@ -3,6 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'" />
   <title>Build a connector — Mycelium</title>
   <meta name="description" content="A connector wraps one source as Mycelium spine records. Five short steps, zero dependencies." />
   <link rel="stylesheet" href="../style.css" />
@@ -105,7 +106,7 @@
   </main>
 
   <script src="../toc.js"></script>
-  <script>window.buildToc('#content', '#toc');</script>
+  <script src="../init-toc.js"></script>
 
   <footer class="wrap">
     <div class="foot">

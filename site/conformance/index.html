@@ -3,6 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'" />
   <title>Conformance — Mycelium</title>
   <meta name="description" content="A zero-dependency kit that proves your connector fits the Mycelium contract before it ships." />
   <link rel="stylesheet" href="../style.css" />
@@ -49,7 +50,10 @@ node connectors/reference-connector/connector.mjs</code></pre>
       <p>The validator returns either <code>{ conformant: true }</code> or a list of specific
       errors. Wire it into your CI so a regression can't ship.</p>
 
-      <article id="checklist">
+      <article id="checklist"
+               data-md-src="./CHECKLIST.md"
+               data-md-label="checklist"
+               data-md-fallback="https://github.com/thomhoffer-arch/Mycelium/blob/main/conformance/CHECKLIST.md">
         <p class="muted">Loading the checklist…</p>
       </article>
 
@@ -85,24 +89,9 @@ node connectors/reference-connector/connector.mjs</code></pre>
     </div>
   </footer>
 
-  <script src="https://cdn.jsdelivr.net/npm/marked@13.0.0/marked.min.js"
-          crossorigin="anonymous"></script>
+  <script src="../vendor/marked.min.js"></script>
+  <script src="../vendor/purify.min.js"></script>
   <script src="../toc.js"></script>
-  <script>
-    (async () => {
-      const target = document.getElementById('checklist');
-      try {
-        const res = await fetch('./CHECKLIST.md', { cache: 'no-cache' });
-        if (!res.ok) throw new Error('HTTP ' + res.status);
-        const md = await res.text();
-        marked.setOptions({ gfm: true });
-        target.innerHTML = marked.parse(md);
-      } catch (e) {
-        target.innerHTML = '<p class="muted">Could not load the checklist. <a href="https://github.com/thomhoffer-arch/Mycelium/blob/main/conformance/CHECKLIST.md">View it on GitHub</a>.</p>';
-      } finally {
-        window.buildToc('#content', '#toc');
-      }
-    })();
-  </script>
+  <script src="../render-md.js"></script>
 </body>
 </html>
