@@ -30,9 +30,15 @@ tested against a real model/project).
 | mycelium-for-forma | Autodesk Forma (early design) | `zone` / `classification` | 🧪 | [`thomhoffer-arch/Mycelium-for-Forma`](https://github.com/thomhoffer-arch/Mycelium-for-Forma) |
 | mycelium-for-qonic | Qonic | `ifcGuid` / `classification` | 🧪 | [`thomhoffer-arch/Mycelium-for-Qonic`](https://github.com/thomhoffer-arch/Mycelium-for-Qonic) |
 | mycelium-for-bim2rdt | BIM2RDT (robot-ready site digital twins) | `ifcGuid` / `zone` / `workPackage` | 🧪 | [`thomhoffer-arch/Mycelium-for-BIM2RDT`](https://github.com/thomhoffer-arch/Mycelium-for-BIM2RDT) |
+| mycelium-for-speckle | Speckle (live data platform, GraphQL + webhooks) | `ifcGuid` / `classification` / `zone` | 🧪 | [`thomhoffer-arch/Mycelium-for-Speckle`](https://github.com/thomhoffer-arch/Mycelium-for-Speckle) |
 
 > Connectors touch live models and project data — the **verified** badge (conformance kit + real
 > project) is the trust signal. Prefer verified for production.
+
+> **Speckle** is a model-data hub, so one connector is a force-multiplier: it
+> exposes everything a team already pushes to Speckle (Revit, Rhino, Grasshopper,
+> ArchiCAD, Civil3D, IFC, …) as live spine records. Versions/commits map directly
+> onto the spine's freshness + provenance.
 
 > **BCF-speaking connectors** (Dalux, Solibri, BIMcollab) are each a complete,
 > standalone package — install only the one you use. They share no library;
