@@ -3,6 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'" />
   <title>Hub — Mycelium</title>
   <meta name="description" content="The Mycelium connector registry. Suggest a source, or add your own connector." />
   <link rel="stylesheet" href="../style.css" />
@@ -66,7 +67,10 @@
 
         <h2>The current registry</h2>
         <p class="muted">Rendered live from <code>hub/REGISTRY.md</code>.</p>
-        <article id="registry">
+        <article id="registry"
+                 data-md-src="./REGISTRY.md"
+                 data-md-label="registry"
+                 data-md-fallback="https://github.com/thomhoffer-arch/Mycelium/blob/main/hub/REGISTRY.md">
           <p class="muted">Loading the registry…</p>
         </article>
       </article>
@@ -89,24 +93,9 @@
     </div>
   </footer>
 
-  <script src="https://cdn.jsdelivr.net/npm/marked@13.0.0/marked.min.js"
-          crossorigin="anonymous"></script>
+  <script src="../vendor/marked.min.js"></script>
+  <script src="../vendor/purify.min.js"></script>
   <script src="../toc.js"></script>
-  <script>
-    (async () => {
-      const target = document.getElementById('registry');
-      try {
-        const res = await fetch('./REGISTRY.md', { cache: 'no-cache' });
-        if (!res.ok) throw new Error('HTTP ' + res.status);
-        const md = await res.text();
-        marked.setOptions({ gfm: true });
-        target.innerHTML = marked.parse(md);
-      } catch (e) {
-        target.innerHTML = '<p class="muted">Could not load the registry. <a href="https://github.com/thomhoffer-arch/Mycelium/blob/main/hub/REGISTRY.md">View it on GitHub</a>.</p>';
-      } finally {
-        window.buildToc('#content', '#toc');
-      }
-    })();
-  </script>
+  <script src="../render-md.js"></script>
 </body>
 </html>

@@ -80,4 +80,26 @@ spec / conformance / connectors / hub.)
 - All copy is in `index.html`; theme tokens (colours/spacing) are CSS variables at the top of
   `style.css`.
 - The Loam section is deliberately a **tease** — keep it intriguing, never describe the moat.
+  (Public-facing it is branded **Mycelium Studio**; "Loam" stays the internal name.)
 - Update the GitHub links if the repo path changes.
+
+## Security
+
+The site is static (GitHub Pages), so the threat surface is small. The measures in the repo:
+
+- **Vendored, not CDN-loaded JS.** `marked` and `DOMPurify` live in `site/vendor/` and are
+  served same-origin — no third-party CDN at runtime (no supply-chain or availability dependency,
+  and it lets us run a strict CSP). To update: `npm pack <pkg>@<ver>`, extract, and replace the
+  file in `site/vendor/`.
+- **Sanitized Markdown.** `render-md.js` renders `REGISTRY.md` / `CHECKLIST.md` /
+  `connective-spine.md` through `marked` **then `DOMPurify.sanitize()`** before touching the DOM.
+  Since the registry is community-PR-editable, this stops a malicious markdown row from injecting
+  script/event-handler HTML. Never re-introduce raw `innerHTML = marked.parse(...)`.
+- **Strict Content-Security-Policy.** Every page carries a `<meta http-equiv>` CSP with
+  `script-src 'self'`. That means **no inline scripts** — keep page JS in external `.js` files
+  (`typing.js`, `render-md.js`, `init-toc.js`, `toc.js`). The only allowed inline block is the
+  non-executable `application/ld+json` SEO data.
+
+Settings that live outside the repo (do these in the GitHub/registrar UI): branch protection on
+`main`, account 2FA, GitHub **Verify domain** + **Enforce HTTPS**, and registrar 2FA/lock for
+`connectivespine.org`.
