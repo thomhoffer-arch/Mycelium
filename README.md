@@ -1,14 +1,16 @@
 # Mycelium — the open connective network for AEC data
 
+**🌐 Live site:** https://thomhoffer-arch.github.io/Mycelium/ — *custom domain `connectivespine.org` coming soon.*
+
 **Mycelium** is the open interoperability layer that links fragmented construction data —
 model, clash, finance, inspection — across tools, parties and phases. Each **connector** exposes
 one source as **spine records** (a shared identity + freshness + provenance shape) so any
 orchestrator can join, triage and account for them. **No connector is mandatory; consumers
 degrade gracefully when one is absent.**
 
-> Loam is the intelligence layer that grows in it. Mycelium is the open, neutral substrate
-> (Apache-2.0); Loam is the private brain built on top. A standard wins by being implementable by
-> everyone — open or closed — so Mycelium is permissively licensed by design.
+> **Mycelium Studio** is the intelligence layer that grows in it. Mycelium is the open, neutral
+> substrate (Apache-2.0); Mycelium Studio is the private brain built on top. A standard wins by
+> being implementable by everyone — open or closed — so Mycelium is permissively licensed by design.
 
 ## What's here
 ```
@@ -40,14 +42,25 @@ lightweight and open (see `GOVERNANCE.md`); the spec evolves by additive minor v
 
 ## Ecosystem
 
-The Connective Spine is implemented by **model sources** (connectors) and consumed by **orchestrators**:
+Mycelium is implemented by **connectors** (which expose sources as spine records) and consumed by
+**Mycelium Studio**, the private intelligence layer.
 
-- **Model Sources**:
-  - [PDRA](https://github.com/thomhoffer-arch/PDRA) (Revit MCP tools)
-  - [loam-revit-connector](https://github.com/thomhoffer-arch/loam-revit-connector) (Revit MCP tools, early stage)
+**Connectors** — the canonical index is the [connector hub](hub/REGISTRY.md). Current connectors:
 
-- **Orchestrators**:
-  - [Loam](https://github.com/thomhoffer-arch/Loam) (private; constructs spine records and provenance ledger)
+- [Mycelium-for-Revit](https://github.com/thomhoffer-arch/Mycelium-for-Revit) — Autodesk Revit (model source)
+- [Mycelium-for-Solibri](https://github.com/thomhoffer-arch/Mycelium-for-Solibri) — Solibri issues + checking/QA results
+- [Mycelium-for-Navisworks](https://github.com/thomhoffer-arch/Mycelium-for-Navisworks) — Navisworks Clash Detective
+- [Mycelium-for-Dalux](https://github.com/thomhoffer-arch/Mycelium-for-Dalux) — Dalux Field/Build (live BCF-API)
+- [Mycelium-for-OpenAEC](https://github.com/thomhoffer-arch/Mycelium-for-OpenAEC) — OpenAEC Studio (IFCX/BCF)
+- [Mycelium-for-Forma](https://github.com/thomhoffer-arch/Mycelium-for-Forma) — Autodesk Forma (early design)
+- [Mycelium-for-Qonic](https://github.com/thomhoffer-arch/Mycelium-for-Qonic) — Qonic
+- [Mycelium-for-BIM2RDT](https://github.com/thomhoffer-arch/Mycelium-for-BIM2RDT) — robot-ready site digital twins
+- …plus in-repo example connectors (reference, email, ERPNext, BCF) under [`connectors/`](connectors/)
+
+**Mycelium Studio** (private) — joins, triages and accounts for spine records across connectors, with
+an append-only provenance ledger. The open spine never depends on it.
+
+> Commercial supersets (e.g. **PDRA**) may implement the same contract but ship separately.
 
 ---
 

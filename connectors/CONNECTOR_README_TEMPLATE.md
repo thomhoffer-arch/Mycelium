@@ -2,7 +2,7 @@
 
 # <Connector name> — `mycelium-connector-<source>`
 
-Connects **<source>** to the connective spine so the Loam orchestrator can join, triage and account for it. Implements the [connective-spine contract](https://github.com/clashcontrol-io/connective-spine/blob/main/CONNECTORS.md). Not mandatory — Loam degrades gracefully without it.
+Connects **<source>** to the connective spine so **Mycelium Studio** can join, triage and account for it. Implements the [connective-spine contract](https://github.com/clashcontrol-io/connective-spine/blob/main/CONNECTORS.md). Not mandatory — Mycelium Studio degrades gracefully without it.
 
 ## What it connects
 - **Source:** <tool / API + version>

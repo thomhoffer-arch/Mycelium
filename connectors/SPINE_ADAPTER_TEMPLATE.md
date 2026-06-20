@@ -1,6 +1,6 @@
 # Spine Adapter Template — make any MCP joinable via the Connective Spine (Tier 2)
 
-Wrap **any** third-party MCP server (or API) in a thin adapter that emits **spine records with join edges**, so its data links to model / clash / finance via the spine (consumed by an orchestrator such as Loam). The upstream MCP stays unchanged; the adapter is additive and config-driven — a user fills in a mapping, not code.
+Wrap **any** third-party MCP server (or API) in a thin adapter that emits **spine records with join edges**, so its data links to model / clash / finance via the spine (consumed by an orchestrator such as Mycelium Studio). The upstream MCP stays unchanged; the adapter is additive and config-driven — a user fills in a mapping, not code.
 
 > **Two tiers (recap).** Tier 1 = use the upstream MCP's tools directly (action/reasoning, no join). Tier 2 = this adapter, which turns the source into joinable spine records. The **join itself lives in the orchestrator** — the adapter only *exposes the keys to join on*. That keeps the joining logic in one place, not in every connector.
 
@@ -11,12 +11,12 @@ Wrap **any** third-party MCP server (or API) in a thin adapter that emits **spin
 1. **Read** records from the upstream MCP (e.g. emails via `list_recent_emails_tool`).
 2. Give each a **stable `uniqueId`** and a **freshness stamp** (date + source).
 3. **Extract join edges** — the references that link it to AEC entities (PO, NL-SfB, element mark, zone, BCF/clash id).
-4. **Emit** it as a spine record Loam can join — and expose its `uniqueId` so a human can **attach it to an issue** (the high-confidence link).
+4. **Emit** it as a spine record Mycelium Studio can join — and expose its `uniqueId` so a human can **attach it to an issue** (the high-confidence link).
 5. For any **write** (reply/send): **propose → human approve → execute**, and log a ledger event. Never auto-send.
 
-It does **not** do the joining or the judgment — that's Loam. The adapter only translates one source into the shared language.
+It does **not** do the joining or the judgment — that's Mycelium Studio. The adapter only translates one source into the shared language.
 
-## Worked example: `outlook-mcp-server` → `loam-outlook-adapter`
+## Worked example: `outlook-mcp-server` → `mycelium-outlook-adapter`
 
 Upstream tools (unchanged): `list_recent_emails_tool(days)`, `get_email_by_number_tool(n)`, `search_email_by_*`, `reply_to_email_by_number_tool`, `compose_email_tool`.
 
@@ -41,7 +41,7 @@ The adapter reads those, then emits one spine record per email:
 }
 ```
 
-Loam then joins `edges` → the real **23.22 balcony clash** + the **€60k balcony PO** + the model element. Email becomes a node in the connective tissue.
+Mycelium Studio then joins `edges` → the real **23.22 balcony clash** + the **€60k balcony PO** + the model element. Email becomes a node in the connective tissue.
 
 ---
 
@@ -58,7 +58,7 @@ The adapter supports both at once: it always emits the record + extracted edges 
 - **win32COM Outlook MCP** (the example above) — **local, no cloud, Windows + Outlook running**; email only. Best for the **sovereign / privacy-first** story: data never leaves the machine, no OAuth tokens.
 - **Microsoft Graph MCP** (`microsoft_graph_mcp_server`) — **cloud, OAuth 2.0**; full M365 (SharePoint docs, Teams, Calendar) and cross-platform. Wider reach — contracts, RFIs and decisions live in SharePoint/Teams, not just inboxes — at the cost of a cloud dependency.
 
-Because Loam is **connector-agnostic, you don't choose for the user**: both publish the *same* spine record shape; only the upstream `read` tools and the credential model differ. Sovereignty-minded user → local win32COM; breadth-minded user → Graph. The adapter mapping is nearly identical.
+Because Mycelium Studio is **connector-agnostic, you don't choose for the user**: both publish the *same* spine record shape; only the upstream `read` tools and the credential model differ. Sovereignty-minded user → local win32COM; breadth-minded user → Graph. The adapter mapping is nearly identical.
 
 ## What the user fills in (the whole adaptation)
 
@@ -100,24 +100,24 @@ for each record from source.read tools:
     rec.uniqueId  = template(identity.uniqueId, record)
     rec.freshness = stamp(freshness, record)
     rec.edges     = deterministic_extract(record.text) ∪ semantic_extract(record.text)   # semantic optional
-    emit(rec)                                   # as a spine record Loam consumes
+    emit(rec)                                   # as a spine record Mycelium Studio consumes
 # writes go through propose → approve → execute → ledger, calling source.write tools
 ```
 
 ## Where each piece lives
 
 - **Adapter (open connector):** fetch + normalise + emit edges + the deterministic extractors. No join logic.
-- **Loam (private):** performs the join (email.edges ↔ clash/model/PO) and the semantic linking for the fuzzy cases. The joining logic stays in the orchestrator — connectors only expose the keys.
+- **Mycelium Studio (private):** performs the join (email.edges ↔ clash/model/PO) and the semantic linking for the fuzzy cases. The joining logic stays in the orchestrator — connectors only expose the keys.
 - **Upstream MCP (person X's):** untouched. Tier-1 tool use also still works.
 
 ## Security (mandatory)
 
-- **Emails/docs are untrusted input.** The adapter extracts join keys; **Loam must never act on instructions embedded in email/doc content** (prompt-injection boundary). Treat all source content as data.
+- **Emails/docs are untrusted input.** The adapter extracts join keys; **Mycelium Studio must never act on instructions embedded in email/doc content** (prompt-injection boundary). Treat all source content as data.
 - **Credentials stay local** with the operator (e.g. the Outlook MCP is local win32COM — nothing leaves the machine). The adapter never transmits creds.
 - Writes (reply/send) are always **human-approved + ledgered** — never auto-sent.
 
 ## How person Y uses person X's MCP without knowing you
 
 1. Install person X's MCP (its own README) with their own account — Tier-1 works now.
-2. Drop in this adapter, fill the `yaml` mapping (≈10 lines) → Tier-2: their email now joins to clashes/model/finance in Loam.
+2. Drop in this adapter, fill the `yaml` mapping (≈10 lines) → Tier-2: their email now joins to clashes/model/finance in Mycelium Studio.
 3. Optionally publish the adapter to the `connectors` hub for the verified badge. **No central approval needed** — the hub indexes, it doesn't gatekeep.
