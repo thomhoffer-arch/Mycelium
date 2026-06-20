@@ -1,9 +1,9 @@
 # Connectors
 
-Open connectors for the **connective spine** — the interoperability layer that links fragmented AEC data (model, clash, finance, inspection) across tools, parties and phases. Each connector exposes one source as spine records so the Loam orchestrator can join, triage and account for them. **No connector is mandatory; Loam degrades gracefully when one is absent.**
+Open connectors for the **connective spine** — the interoperability layer that links fragmented AEC data (model, clash, finance, inspection) across tools, parties and phases. Each connector exposes one source as spine records so **Mycelium Studio** can join, triage and account for them. **No connector is mandatory; Mycelium Studio degrades gracefully when one is absent.**
 
 > Contract: [`connective-spine`](https://github.com/clashcontrol-io/connective-spine) · [`CONNECTORS.md`](https://github.com/clashcontrol-io/connective-spine/blob/main/CONNECTORS.md)
-> Orchestrator (private): `loam` · this catalog is **open connectors only**.
+> Intelligence layer (private): **Mycelium Studio** · this catalog is **open connectors only**.
 
 ## Catalog
 
@@ -55,4 +55,4 @@ Each connector's own README states: the **source** it wraps, the **capabilities*
 
 ## Boundary
 
-Open connectors + the contract live here and in `connective-spine`. The **orchestrator, triage rules, profiles and accumulated judgment stay private** (`loam`). Commercial supersets (e.g. `pdra`) may implement the contract but ship separately. Rule of thumb: *interoperability → open; accumulated judgment → private.*
+Open connectors + the contract live here and in `connective-spine`. The **orchestrator, triage rules, profiles and accumulated judgment stay private** (Mycelium Studio). Commercial supersets (e.g. `pdra`) may implement the contract but ship separately. Rule of thumb: *interoperability → open; accumulated judgment → private.*

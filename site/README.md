@@ -1,7 +1,7 @@
 # Mycelium teaser site
 
 A zero-framework static landing page — **Mycelium-forward** (the open standard, with a "build a
-connector" CTA) and a **Loam teaser** (coming soon, no moat exposed). Two files: `index.html` +
+connector" CTA) and a **Mycelium Studio teaser** (coming soon, no moat exposed). Two files: `index.html` +
 `style.css`. No build step.
 
 ## Deploy (Vercel)
@@ -69,18 +69,18 @@ Optional mirror automation: enable Codeberg's pull-mirror to track the GitHub
 `main`, then a Codeberg Action / cron can copy `site/` → `pages` branch on
 update. Codeberg's free tier covers a teaser comfortably.
 
-## Why it lives in Mycelium (not Loam)
+## Why it lives in Mycelium (not the private core)
 
 The site promotes the **open** thing. Keeping it in the **public** Mycelium repo preserves the
-public/private split — the proprietary Loam repo stays private. (The links point at the Mycelium
-spec / conformance / connectors / hub.)
+public/private split — the proprietary Mycelium Studio repo stays private. (The links point at the
+Mycelium spec / conformance / connectors / hub.)
 
 ## Editing
 
 - All copy is in `index.html`; theme tokens (colours/spacing) are CSS variables at the top of
   `style.css`.
-- The Loam section is deliberately a **tease** — keep it intriguing, never describe the moat.
-  (Public-facing it is branded **Mycelium Studio**; "Loam" stays the internal name.)
+- The **Mycelium Studio** section is deliberately a **tease** — keep it intriguing, never describe
+  the moat.
 - Update the GitHub links if the repo path changes.
 
 ## Security

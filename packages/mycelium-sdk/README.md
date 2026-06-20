@@ -88,7 +88,7 @@ append('ledger.jsonl', {
 const { ok, count, errors } = verifyChain('ledger.jsonl');
 ```
 
-The ledger is append-only JSONL, hash-chained with SHA-256 over canonical key order. On-disk format is identical to `orchestrator/src/core/ledger.js` in the private Loam repo — they verify against each other.
+The ledger is append-only JSONL, hash-chained with SHA-256 over canonical key order. On-disk format is identical to `orchestrator/src/core/ledger.js` in the private Mycelium Studio repo — they verify against each other.
 
 ### Revit UniqueId → IFC GlobalId
 
