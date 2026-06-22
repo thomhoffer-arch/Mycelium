@@ -89,6 +89,14 @@
       (<code>lib/provenance.mjs</code>). Actors in the log are pseudonymous refs like
       <code>human:u_8f3a</code> or <code>agent:llm</code>, never names or emails.</p>
 
+      <h2>How your connector is consumed</h2>
+      <p>A connector is <b>pulled, not pushed</b>. You <i>expose</i> your source — over MCP, REST
+      or files — and a consumer reads from it. There is <b>no ingest endpoint</b> to POST records
+      to: as the <a href="../trust/">Trust</a> page says, there's <i>no central Mycelium server,
+      no mandatory upload, no shared bucket</i>. The intelligence layer binds your connector and
+      reads it where it runs — on your machine. So don't build a forwarder that ships records into
+      a sink; expose the source and let the orchestrator drive it.</p>
+
       <h2>Maturity</h2>
       <ul>
         <li><b>experimental</b> — works on a fixture; not battle-tested.</li>
