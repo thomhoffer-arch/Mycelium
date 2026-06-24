@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'" />
+  <title>Shadow AI on your project — and the governed alternative — Mycelium</title>
+  <meta name="description" content="Shadow AI — ungoverned copilots employees paste project data into — is the fastest-growing liability in AEC. Mycelium Studio is governed by construction: your data stays put, every AI decision is human-approved, and the whole chain is on a tamper-evident ledger." />
+  <meta name="keywords" content="shadow AI construction, ungoverned AI AEC, AI governance BIM, accountable AI construction, sovereign AI BIM, AI data leak construction, black-box copilot risk, auditable AI decisions, human-in-the-loop AEC, provenance ledger AI, GDPR AI construction, EU AI Act AEC" />
+  <meta property="og:title" content="Shadow AI is a liability. Governed AI is the fix. — Mycelium" />
+  <meta property="og:description" content="A black-box cloud copilot that can't show its work is a liability you can't audit. Mycelium Studio makes AI on your project answerable." />
+  <link rel="stylesheet" href="../style.css" />
+  <link rel="stylesheet" href="../spec/spec.css" />
+</head>
+<body>
+  <header class="nav">
+    <div class="wrap">
+      <a class="mark" href="../">Mycelium</a>
+      <nav>
+        <a href="../spec/">Spec</a>
+        <a href="../build/">Build</a>
+        <a href="../conformance/">Conformance</a>
+        <a href="../hub/">Hub</a>
+        <a href="../trust/">Trust</a>
+        <a class="ghost" href="https://github.com/thomhoffer-arch/Mycelium">GitHub</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <article class="wrap spec">
+      <p class="kicker">governance · accountability · safety</p>
+      <h1>Shadow AI is already on your project.</h1>
+      <p class="lede">
+        Someone on your team has already pasted a tender price, a defect report, or a contract
+        clause into a free cloud chatbot to "just check something". A black-box copilot that
+        can't show its work turns every answer into a liability you can't audit. Mycelium Studio
+        is built the other way around: AI on your project is governed <i>by construction</i> —
+        your data stays put, every decision is human-approved, and the whole chain is on a
+        tamper-evident ledger.
+      </p>
+
+      <h2>1. What shadow AI is — and why AEC is exposed.</h2>
+      <p>"Shadow AI" is the use of AI tools without the knowledge, approval or oversight of the
+      people accountable for the project: free-tier chatbots, browser plug-ins, embedded SaaS
+      features, ungoverned agents. Industry surveys in 2025 put adoption past <b>80% of
+      employees</b>, while only around <b>a third of organisations</b> have any AI governance in
+      place — and IBM's 2025 <i>Cost of a Data Breach</i> report tied roughly <b>one in five</b>
+      breaches at affected organisations to unsanctioned AI.</p>
+      <p>AEC is more exposed than most. The data getting pasted out isn't a marketing draft — it's
+      priced bills of quantities, defect-liability evidence, named personal data, and contract
+      terms, on a project that stays legally live for ten years or more across a dozen firms.
+      Once it leaves for someone else's model, you can't recall it, and you can't prove what it
+      was used to decide.</p>
+
+      <h2>2. The black-box cloud copilot is the problem, not the cure.</h2>
+      <p>The standard answer on the market today is a hosted copilot: ship your project into a
+      vendor's cloud, let an opaque model rank it, and trust the result. That pattern <i>is</i>
+      shadow AI with a logo on it. The data still flows outward to an external model, and when a
+      client, an insurer or an arbitrator asks "which AI suggested this, who approved it, and
+      when?", there is no answer — the reasoning, the inputs and the approval all happened
+      somewhere you can't reach.</p>
+      <p>Banning it doesn't work either: when AI is prohibited, roughly half of people keep using
+      personal accounts anyway. The only thing that actually moves the needle is a governed
+      alternative that's <i>better</i> than the shadow one — same speed, with the receipts.</p>
+
+      <h2>3. Mycelium Studio: governed AI, by construction.</h2>
+      <p>Mycelium Studio is the intelligence layer that grows on the open
+      <a href="../spec/">Connective Spine</a>. Every property that makes shadow AI dangerous is
+      designed out of it:</p>
+
+      <h3>Your data never leaves to be ranked.</h3>
+      <p>The intelligence runs <i>inside</i> your environment — your laptop, your server, your
+      VPC — against the connectors you already trust. There is no mandatory upload and no shared
+      bucket. The model comes to the data, not the other way around.</p>
+
+      <h3>The agent proposes; a human disposes.</h3>
+      <p>Mycelium Studio never executes a change on its own. It emits a <b>proposal</b> that a
+      named human approves before anything is written. Actors are recorded as pseudonymous refs —
+      <code>agent:llm</code>, <code>human:u_8f3a</code> — so the audit trail captures the decision
+      without leaking the person (and survives a GDPR erasure request intact).</p>
+
+      <h3>Every AI decision is on a tamper-evident ledger.</h3>
+      <p>Each proposal, approval and executed change is appended to a log, and every entry carries
+      a SHA-256 hash of the one before it. Rewrite a single event and every later hash stops
+      matching. "Which AI suggested this, who signed off, and when?" stops being unanswerable and
+      becomes <b>one file you can hand over</b> — to a court, an insurer, or an EU AI Act auditor.</p>
+
+      <h3>No black box, no lock-in.</h3>
+      <p>The spine it runs on is open (Apache-2.0) and the contract is public, so the intelligence
+      layer is interchangeable: self-host it, swap it, or audit it. You are never trapped inside a
+      vendor whose model you can't see and can't leave.</p>
+
+      <h2>From shadow AI to accountable AI.</h2>
+      <p>The goal isn't to ban AI from the jobsite — that battle is already lost. It's to make the
+      AI that's already there <b>answerable</b>: data that stays yours, decisions a human owns, and
+      a record that holds up when someone asks who decided what. That's the difference between a
+      copilot you have to trust and one you can <i>prove</i>.</p>
+
+      <p class="cta-row">
+        <a class="btn" href="../trust/">How we keep it private</a>
+        <a class="btn ghost" href="../intelligence/">The intelligence layer</a>
+      </p>
+    </article>
+  </main>
+
+  <footer class="wrap">
+    <div class="foot">
+      <span class="mark small">Mycelium</span>
+      <nav>
+        <a href="../spec/">Spec</a>
+        <a href="../build/">Build a connector</a>
+        <a href="../conformance/">Conformance</a>
+        <a href="../hub/">Hub</a>
+        <a href="../trust/">Trust</a>
+        <a href="./">Shadow AI</a>
+        <a href="../intelligence/">Intelligence</a>
+        <a href="https://github.com/thomhoffer-arch/Mycelium">GitHub</a>
+      </nav>
+      <span class="muted">An open standard · Apache-2.0</span>
+    </div>
+  </footer>
+</body>
+</html>

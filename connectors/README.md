@@ -53,6 +53,15 @@ Each connector's own README states: the **source** it wraps, the **capabilities*
 3. Run the **conformance kit**; fix until green.
 4. Open a PR here to list it in the catalog (and request the verified badge).
 
+## How a connector is consumed
+
+A connector is **pulled, not pushed**. It *exposes* its source — over MCP (`initialize → tools/call`), REST, or files — and a consumer reads from it. It never forwards records into a central sink. There is **no ingest endpoint** and **no `POST /api/ingest`**: the spine has *no central Mycelium server, no mandatory upload, no shared bucket*. The intelligence layer (**Mycelium Studio**) **binds the connector and reads it in place**, on your machine.
+
+Two consequences for connector authors:
+
+- **Don't build a forwarder.** You do not run the connector and POST its output to Mycelium Studio. You expose the source; the orchestrator drives it (and stays interchangeable because it binds the contract, not your code).
+- **Know who builds the spine record.** A *generic source adapter* (`runAdapter` + `fetchSource` — see [`reference-connector`](reference-connector/connector.mjs)) emits finished spine records. A *model source* exposes the five raw MCP tools and the **orchestrator** assembles the spine record from the raw fields — see [`spec/model-source-contract.md`](../spec/model-source-contract.md).
+
 ## Boundary
 
 Open connectors + the contract live here and in `connective-spine`. The **orchestrator, triage rules, profiles and accumulated judgment stay private** (Mycelium Studio). Commercial supersets (e.g. `pdra`) may implement the contract but ship separately. Rule of thumb: *interoperability → open; accumulated judgment → private.*
